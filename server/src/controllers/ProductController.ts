@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import Product from "../models/Product";
 import { matchedData, validationResult } from "express-validator";
 import { ProductRequest } from "../middlewares/ProductMiddleware";
-import { updateProductSchema } from "../validation/ProductSchema";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -56,9 +55,6 @@ const updateProduct = async (req: ProductRequest, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  // Your update logic here
-
   const { body, product } = req;
 
   const updatedProduct = await Product.findOneAndUpdate(

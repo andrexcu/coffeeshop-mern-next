@@ -6,9 +6,8 @@ import {
   getProducts,
   updateProduct,
 } from "../controllers/ProductController";
-import { checkSchema } from "express-validator";
 import {
-  createProductValidationSchema,
+  createProductSchema,
   updateProductSchema,
 } from "../validation/ProductSchema";
 import { productMiddleware } from "../middlewares/ProductMiddleware";
@@ -16,12 +15,7 @@ import { productMiddleware } from "../middlewares/ProductMiddleware";
 export const productRouter = express.Router();
 
 productRouter.get("/", getProducts);
-productRouter.post(
-  "/",
-  checkSchema(createProductValidationSchema),
-  createProduct
-);
-// productRouter.post("/:id", updateProduct);
+productRouter.post("/", createProductSchema, createProduct);
 productRouter.get("/:id", productMiddleware, getProduct);
 productRouter.patch(
   "/:id",
