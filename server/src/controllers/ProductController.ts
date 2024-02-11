@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import Product from "../models/Product";
-import { validationResult } from "express-validator";
+import { matchedData, validationResult } from "express-validator";
 import { ProductRequest } from "../middlewares/ProductMiddleware";
+import { updateProductSchema } from "../validation/ProductSchema";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -27,9 +28,9 @@ const createProduct = async (req: Request, res: Response) => {
       return res.status(422).json({ errors: errorMessages });
     }
 
-    const {
-      body: { name, price },
-    } = req;
+    const data = matchedData(req);
+
+    const { name, price } = data;
 
     const newProduct = new Product({
       name,
@@ -51,11 +52,14 @@ const getProduct = async (req: ProductRequest, res: Response) => {
 };
 
 const updateProduct = async (req: ProductRequest, res: Response) => {
-  const {
-    body,
-    params: { id },
-    product,
-  } = req;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  // Your update logic here
+
+  const { body, product } = req;
 
   const updatedProduct = await Product.findOneAndUpdate(
     product,

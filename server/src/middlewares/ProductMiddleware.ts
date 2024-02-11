@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import Product from "../models/Product";
-// Define a custom interface that extends the Request type
+import { productType } from "../types/productType";
+
 export interface ProductRequest extends Request {
-  product?: any; // Replace 'any' with the actual type of your product model
+  product?: productType;
 }
 
 export const productMiddleware = async (
