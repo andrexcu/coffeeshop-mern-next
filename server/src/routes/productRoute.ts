@@ -12,15 +12,15 @@ import {
 } from "../validation/ProductSchema";
 import { productMiddleware } from "../middlewares/ProductMiddleware";
 
-export const productRouter = express.Router();
+export const productsRouter = express.Router();
 
-productRouter.get("/", getProducts);
-productRouter.post("/", createProductSchema, createProduct);
-productRouter.get("/:id", productMiddleware, getProduct);
-productRouter.patch(
+productsRouter.get("/", getProducts);
+productsRouter.post("/", createProductSchema, createProduct);
+productsRouter.get("/:id", productMiddleware, getProduct);
+productsRouter.patch(
   "/:id",
   productMiddleware,
   updateProductSchema,
   updateProduct
 );
-productRouter.delete("/:id", productMiddleware, deleteProduct);
+productsRouter.delete("/:id", productMiddleware, deleteProduct);

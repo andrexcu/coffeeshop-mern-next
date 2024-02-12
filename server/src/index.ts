@@ -1,7 +1,9 @@
 import express, { Request, Response, response } from "express";
+import session from "express-session";
 import cors from "cors";
 import mongoose from "mongoose";
-import { productRouter } from "./routes/productRoute";
+import passport from "passport";
+import routes from "./routes/index";
 
 require("dotenv").config();
 const app = express();
@@ -14,7 +16,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/api/products", productRouter);
+app.use(
+  session({
+    secret: "dev-secret",
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 60000 * 60 },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(routes);
 
 mongoose.connect(process.env.DATABASE_URL!).then(() => {
   console.log(`listening on port ${PORT}`);
