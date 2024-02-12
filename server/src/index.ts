@@ -4,8 +4,10 @@ import cors from "cors";
 import mongoose from "mongoose";
 import passport from "passport";
 import routes from "./routes/index";
+import "./strategies/local-strategy";
 
 require("dotenv").config();
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -18,7 +20,7 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: "dev-secret",
+    secret: "andrexcu-dev-secret",
     saveUninitialized: false,
     resave: false,
     cookie: { maxAge: 60000 * 60 },
