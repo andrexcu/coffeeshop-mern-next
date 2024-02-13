@@ -17,19 +17,3 @@ export const createUserSchema = [
 
   body("password").notEmpty().withMessage("Password cannot be empty"),
 ];
-
-// export const updateProductSchema = [
-//   body("name")
-//     .optional()
-//     .notEmpty()
-//     .withMessage("product name cannot be empty")
-//     .isString()
-//     .withMessage("product must be a string"),
-
-//   body("price")
-//     .optional()
-//     .notEmpty()
-//     .withMessage("price cannot be empty")
-//     .isNumeric()
-//     .withMessage("price must be a number"),
-// ];
