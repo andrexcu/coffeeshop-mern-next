@@ -1,6 +1,8 @@
 "use client";
 
 import Preloader from "@/components/Preloader";
+import Hero from "@/components/Sections/Hero";
+import Herotwo from "@/components/Sections/Herotwo";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -24,7 +26,8 @@ export default function Home() {
         <AnimatePresence mode="wait">
           {isLoading && <Preloader />}
         </AnimatePresence>
-        Hello
+        <Hero />
+        <Herotwo />
       </div>
     </>
   );
