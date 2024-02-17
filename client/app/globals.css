@@ -7,29 +7,38 @@
   overflow: hidden;
 } */
 /* Hide scrollbar for Chrome, Safari, and Opera */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 :root {
-  --red: #1a100a;
+  --red: #0c0404;
   --green: #071004;
+  --yellow: #d39c43;
+  --green: #1a2421;
   --bgColor: bisque;
+  --brown: #3d2b1f;
+  --orange: #fdba74;
 }
 /* Hide scrollbar for Firefox */
-body {
+/* body {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-}
+} */
 
 /* frames*/
-.page-framed {
-  /* box-shadow: -50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red); */
-  box-shadow: 50px -50px 0 -40px var(--red), -50px 50px 0 -40px var(--red);
+@media screen and (min-width: 640px) {
+  .page-framed {
+    box-shadow: 50px -50px 0 -40px var(--red), -50px 50px 0 -40px var(--red);
+  }
 }
 
-/* .cover-image-framed {
-  box-shadow: -50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red);
-} */
+@media screen and (min-width: 1024px) {
+  .hero-framed {
+    box-shadow: 10px 10px 0 0 var(--orange);
+  }
+}
+
 .cover-image-framed {
   box-shadow: 50px -50px 0 -30px var(--red), -50px 50px 0 -30px var(--red);
 }
+/* box-shadow: -50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red); */
