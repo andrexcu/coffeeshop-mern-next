@@ -1,8 +1,9 @@
 "use client";
 
 import Preloader from "@/components/Preloader";
+import About from "@/components/Sections/About";
 import Hero from "@/components/Sections/Hero";
-import Herotwo from "@/components/Sections/Herotwo";
+import WhyUs from "@/components/Sections/WhyUs";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,8 @@ export default function Home() {
           {isLoading && <Preloader />}
         </AnimatePresence>
         <Hero />
-        <Herotwo />
+        <About />
+        <WhyUs />
       </div>
     </>
   );

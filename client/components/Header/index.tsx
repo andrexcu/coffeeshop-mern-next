@@ -71,7 +71,7 @@ export default function index() {
         className={`flex items-center justify-center w-full absolute top-0 h-32 z-10 bg-zinc-950/80 backdrop-blur-md`}
       >
         <div
-          className={`${styles.header} w-full max-w-7xl flex items-center justify-between p-4 text-slate-300`}
+          className={`${styles.header} w-full max-w-7xl flex items-center justify-between p-4 text-slate-300 cursor-pointer`}
         >
           {/* <div className="flex gap-x-2 text-2xl">COFFEE SHOP</div> */}
           <div className="border-2 border-slate-200 py-8 max-w-[152px] px-2 bg-zinc-950">
@@ -80,13 +80,11 @@ export default function index() {
               <div
                 className={`${styles.name} text-3xl ${lobsterTwo.className}`}
               >
-                <p className={`${styles.premium} text-3xl pr-2 pl-2`}>
+                {/* <p className={`${styles.premium} text-3xl pr-2 pl-2`}>
                   Premium.
-                </p>
-                <p className={`${styles.coffee} text-orange-300 text-3xl`}>
-                  Coffee
-                </p>
-                <p className={`${styles.shop} text-3xl`}>Shop</p>
+                </p> */}
+                <p className={` text-orange-300 text-3xl`}>Coffee</p>
+                <p className={` text-3xl`}>Shop</p>
               </div>
             </div>
           </div>
