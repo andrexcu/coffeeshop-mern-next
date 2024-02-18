@@ -2,6 +2,7 @@
 
 import Preloader from "@/components/Preloader";
 import About from "@/components/Sections/About";
+import Booking from "@/components/Sections/Booking";
 import Hero from "@/components/Sections/Hero";
 import WhyUs from "@/components/Sections/WhyUs";
 import { AnimatePresence } from "framer-motion";
@@ -30,6 +31,7 @@ export default function Home() {
         <Hero />
         <About />
         <WhyUs />
+        <Booking />
       </div>
     </>
   );

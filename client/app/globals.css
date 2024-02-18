@@ -41,6 +41,11 @@
 .cover-image-framed {
   box-shadow: 50px -50px 0 -30px var(--red), -50px 50px 0 -30px var(--red);
 }
+
+.about-framed {
+  /* box-shadow: -50px 50px 0 -30px var(--orange), 50px -50px 0 -30px var(--orange); */
+  box-shadow: -50px -50px 0 -40px var(--orange), 50px 50px 0 -40px var(--orange);
+}
 /* box-shadow: -50px -50px 0 -40px var(--red), 50px 50px 0 -40px var(--red); */
 
 /* HERO CSS */
@@ -142,4 +147,50 @@
     transform: scale(1, 1);
     opacity: 0;
   }
+}
+
+/* about section css */
+.about-img {
+  position: relative;
+  transition: 0.5s;
+}
+
+.about-img::before {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  content: "";
+  border-left: 5px solid #cda45e;
+  border-top: 5px solid #cda45e;
+  transition: 0.5s;
+}
+
+.about-img::after {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  content: "";
+  border-right: 5px solid #cda45e;
+  border-bottom: 5px solid #cda45e;
+  transition: 0.5s;
+}
+
+.about-img:hover {
+  transform: scale(1.03);
+}
+
+.about-img:hover::before {
+  left: 10px;
+  top: 10px;
+}
+
+.about-img:hover::after {
+  right: 10px;
+  bottom: 10px;
 }

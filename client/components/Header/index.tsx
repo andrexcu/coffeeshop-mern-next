@@ -130,7 +130,7 @@ export default function index() {
       </div>
       <div
         ref={button}
-        className={`${styles.headerButtonContainer} scale-0 z-40`}
+        className={`${styles.headerButtonContainer} scale-0 z-[90]`}
       >
         <Rounded
           onClick={() => {

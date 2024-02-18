@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className} bg-[#FCFBFC] relative `}>
+      <body className={` ${inter.className} bg-stone-800 relative `}>
         <Header />
         <div className="overflow-x-hidden">{children}</div>
       </body>
