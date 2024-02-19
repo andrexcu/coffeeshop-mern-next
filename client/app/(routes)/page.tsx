@@ -2,8 +2,8 @@
 
 import Preloader from "@/components/Preloader";
 import About from "@/components/Sections/About";
-import Booking from "@/components/Sections/Booking";
 import Hero from "@/components/Sections/Hero";
+import Info from "@/components/Sections/Info";
 import WhyUs from "@/components/Sections/WhyUs";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -41,8 +41,14 @@ export default function Home() {
         <section className="sm:px-16 px-8 sm:py-16 py-12">
           <WhyUs />
         </section>
-        <section className="bg-stone-950 sm:px-16 px-8 sm:py-24 py-12">
-          <Booking />
+        <section
+          className="relative sm:px-16 px-8 sm:py-24 py-12 bg-cover"
+          style={{
+            backgroundImage: 'url("/images/info-bg.jpg")',
+            backgroundPosition: "center",
+          }}
+        >
+          <Info />
         </section>
       </div>
     </>
