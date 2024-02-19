@@ -29,9 +29,21 @@ export default function Home() {
           {isLoading && <Preloader />}
         </AnimatePresence>
         <Hero />
-        <About />
-        <WhyUs />
-        <Booking />
+        <section
+          className="relative sm:px-16 px-8 sm:py-16 py-12 bg-cover"
+          style={{
+            backgroundImage: 'url("/images/about-us-bg.jpg")',
+            backgroundPosition: "center",
+          }}
+        >
+          <About />
+        </section>
+        <section className="sm:px-16 px-8 sm:py-16 py-12">
+          <WhyUs />
+        </section>
+        <section className="bg-stone-950 sm:px-16 px-8 sm:py-24 py-12">
+          <Booking />
+        </section>
       </div>
     </>
   );

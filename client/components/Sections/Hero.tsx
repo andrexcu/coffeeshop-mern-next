@@ -43,7 +43,7 @@ const Hero = () => {
             <div className="flex gap-x-8">
               {/* bg-[#3D2B1F]/90 */}
               <div className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer min-w-[150px] text-center transition duration-300 ease-in hover:bg-[#3D2B1F]">
-                BOOK A TABLE
+                ORDER NOW
               </div>
               <div className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer min-w-[150px] text-center transition duration-300 ease-in hover:bg-[#3D2B1F]">
                 CONTACT US

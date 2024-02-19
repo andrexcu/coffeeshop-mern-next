@@ -9,7 +9,7 @@ const SectionTitle = ({
   subtitle: string;
 }) => {
   return (
-    <div className="section-title">
+    <div className="section-title gap-y-2">
       <h2>{title}</h2>
       <p>{subtitle}</p>
     </div>
