@@ -128,7 +128,7 @@ export default function index() {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         ref={button}
         className={`${styles.headerButtonContainer} scale-0 z-[90]`}
       >
@@ -145,7 +145,7 @@ export default function index() {
           ></div>
         </Rounded>
       </div>
-      <AnimatePresence mode="wait">{isActive && <Nav />}</AnimatePresence>
+      <AnimatePresence mode="wait">{isActive && <Nav />}</AnimatePresence> */}
     </div>
   );
 }

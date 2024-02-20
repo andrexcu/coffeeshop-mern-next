@@ -1,5 +1,5 @@
 import { urbanist } from "@/app/fonts";
-import { Check, Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 
 import React from "react";
 

@@ -2,6 +2,7 @@
 
 import Preloader from "@/components/Preloader";
 import About from "@/components/Sections/About";
+import Contact from "@/components/Sections/Contact";
 import Hero from "@/components/Sections/Hero";
 import Info from "@/components/Sections/Info";
 import WhyUs from "@/components/Sections/WhyUs";
@@ -49,6 +50,9 @@ export default function Home() {
           }}
         >
           <Info />
+        </section>
+        <section className="relative sm:px-16 px-8 sm:py-24 py-12 flex justify-center items-center">
+          <Contact />
         </section>
       </div>
     </>

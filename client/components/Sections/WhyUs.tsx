@@ -4,6 +4,7 @@ import { whyUs } from "../data/data";
 import SectionTitle from "../Common/SectionTitle";
 import { poppins } from "@/app/fonts";
 
+
 const WhyUs = () => {
   const [selected, setSelected] = useState(whyUs[0].id);
 
