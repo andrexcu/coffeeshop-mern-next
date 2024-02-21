@@ -7,10 +7,10 @@ const Contact = () => {
     e.preventDefault();
   };
   return (
-    <div className="max-w-7xl w-full py-12">
+    <div className="max-w-7xl w-full mt-12">
       <SectionTitle title="Contact" subtitle="Contact Us" />
       <div className="relative flex justify-center items-center ">
-        <div className="flex flex-col lg:flex-row justify-center items-start mx-auto max-w-7xl w-full my-12 lg:h-[600px] z-10">
+        <div className="flex flex-col lg:flex-row justify-center items-start mx-auto max-w-7xl w-full lg:h-[600px] z-10">
           {/* <div className="flex flex-col lg:flex-row z-10 border"> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex flex-col items-start justify-start gap-y-12 p-4 w-full lg:w-1/3 h-full text-slate-200 ">
             <div className="flex gap-x-4">
@@ -55,7 +55,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col gap-y-2">
                 <p>Call:</p>
-                <p className="text-sm font-thin">09773443205</p>
+                <p className="text-sm font-thin">+63 9773443205</p>
               </div>
             </div>
           </div>

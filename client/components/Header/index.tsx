@@ -21,49 +21,49 @@ export default function index() {
     if (isActive) setIsActive(false);
   }, [pathname]);
 
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  // useLayoutEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
 
-    gsap.to(button.current, {
-      scale: isActive ? 1 : 0, // Initial scale based on isActive
-      duration: 0.25,
-      ease: "power1.out",
-    });
+  //   gsap.to(button.current, {
+  //     scale: isActive ? 1 : 0, // Initial scale based on isActive
+  //     duration: 0.25,
+  //     ease: "power1.out",
+  //   });
 
-    gsap.to(button.current, {
-      scrollTrigger: {
-        trigger: document.documentElement,
-        start: 0,
-        end: window.innerHeight,
-        // () => "+=" + window.innerHeight
-        // onEnter: () => {
-        //   // Check if isActive is true before applying the scale animation
-        //   if (isActive) {
-        //     gsap.to(button.current, {
-        //       scale: 1,
-        //       duration: 0.25,
-        //       ease: "power1.out",
-        //     });
-        //   }
-        // },
-        onLeave: () => {
-          gsap.to(button.current, {
-            scale: 1,
-            duration: 0.25,
-            ease: "power1.out",
-          });
-        },
-        onEnterBack: () => {
-          gsap.to(button.current, {
-            scale: 0,
-            duration: 0.25,
-            ease: "power1.out",
-            onComplete: () => setIsActive(false),
-          });
-        },
-      },
-    });
-  }, [isActive]);
+  //   gsap.to(button.current, {
+  //     scrollTrigger: {
+  //       trigger: document.documentElement,
+  //       start: 0,
+  //       end: window.innerHeight,
+  //       () => "+=" + window.innerHeight
+  //       onEnter: () => {
+  //         // Check if isActive is true before applying the scale animation
+  //         if (isActive) {
+  //           gsap.to(button.current, {
+  //             scale: 1,
+  //             duration: 0.25,
+  //             ease: "power1.out",
+  //           });
+  //         }
+  //       },
+  //       onLeave: () => {
+  //         gsap.to(button.current, {
+  //           scale: 1,
+  //           duration: 0.25,
+  //           ease: "power1.out",
+  //         });
+  //       },
+  //       onEnterBack: () => {
+  //         gsap.to(button.current, {
+  //           scale: 0,
+  //           duration: 0.25,
+  //           ease: "power1.out",
+  //           onComplete: () => setIsActive(false),
+  //         });
+  //       },
+  //     },
+  //   });
+  // }, [isActive]);
 
   return (
     <div className={`relative flex justify-center `}>
@@ -74,7 +74,7 @@ export default function index() {
           className={`${styles.header} w-full max-w-7xl flex items-center justify-between p-4 text-slate-300 cursor-pointer`}
         >
           {/* <div className="flex gap-x-2 text-2xl">COFFEE SHOP</div> */}
-          <div className="border-2 border-slate-200 py-8 max-w-[152px] px-2 bg-zinc-950">
+          <div className="border-2 border-slate-200 py-8 w-[156px] px-2 bg-zinc-950">
             <div className={`${styles.logo} flex  `}>
               {/* <p className={styles.copyright}>©</p> */}
               <div

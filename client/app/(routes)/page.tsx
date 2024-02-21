@@ -3,6 +3,7 @@
 import Preloader from "@/components/Preloader";
 import About from "@/components/Sections/About";
 import Contact from "@/components/Sections/Contact";
+import Footer from "@/components/Sections/Footer";
 import Hero from "@/components/Sections/Hero";
 import Info from "@/components/Sections/Info";
 import WhyUs from "@/components/Sections/WhyUs";
@@ -26,9 +27,9 @@ export default function Home() {
   return (
     <>
       <div className="main">
-        <AnimatePresence mode="wait">
+        {/* <AnimatePresence mode="wait">
           {isLoading && <Preloader />}
-        </AnimatePresence>
+        </AnimatePresence> */}
         <Hero />
         <section
           className="relative sm:px-16 px-8 sm:py-16 py-12 bg-cover"
@@ -51,8 +52,11 @@ export default function Home() {
         >
           <Info />
         </section>
-        <section className="relative sm:px-16 px-8 sm:py-24 py-12 flex justify-center items-center">
+        <section className="relative sm:px-16 px-8 pt-12 pb-8 flex justify-center items-center">
           <Contact />
+        </section>
+        <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
+          <Footer />
         </section>
       </div>
     </>

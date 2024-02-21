@@ -4,7 +4,6 @@ import { whyUs } from "../data/data";
 import SectionTitle from "../Common/SectionTitle";
 import { poppins } from "@/app/fonts";
 
-
 const WhyUs = () => {
   const [selected, setSelected] = useState(whyUs[0].id);
 
@@ -19,7 +18,7 @@ const WhyUs = () => {
             <div
               key={item.id}
               className={`bg-neutral-900 flex-col gap-y-8 justify-center p-6 ${
-                selected === item.id ? "flex" : "hidden lg:flex"
+                selected === item.id ? " flex" : "hidden lg:flex"
               }`}
             >
               <h1 className="text-5xl text-orange-300">{`0${item.id}`}</h1>
