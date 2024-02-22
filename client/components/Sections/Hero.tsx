@@ -5,7 +5,11 @@ import { urbanist } from "@/app/fonts";
 import GLightbox from "glightbox";
 import Link from "next/link";
 
-const Hero = () => {
+interface HeroProps {
+  scrollToContact: () => void;
+}
+
+const Hero = ({ scrollToContact }: HeroProps) => {
   // useEffect(() => {
   //   new GLightbox({
   //     selector: ".glightbox",
@@ -45,23 +49,26 @@ const Hero = () => {
               <div className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer min-w-[150px] text-center transition duration-300 ease-in hover:bg-[#3D2B1F]">
                 ORDER NOW
               </div>
-              <div className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer min-w-[150px] text-center transition duration-300 ease-in hover:bg-[#3D2B1F]">
+              <div
+                onClick={scrollToContact}
+                className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer min-w-[150px] text-center transition duration-300 ease-in hover:bg-[#3D2B1F]"
+              >
                 CONTACT US
               </div>
             </div>
           </div>
           <div className="lg:absolute right-4">
             <div
-              className={`lg:mt-40 flex flex-col items-start max-w-[400px] h-[175px] border-l-4 border-[#1B1B1B] text-slate-200 ${lobsterTwo.className} p-4 `}
+              className={`s lg:mt-40 flex flex-col items-center sm:items-start max-w-[400px] h-[120px] sm:h-[175px] sm:border-l-4 border-[#1B1B1B] text-slate-200 ${lobsterTwo.className} p-4 `}
             >
-              <p className="text-7xl">Premium.</p>
-              <p className="flex gap-x-4 text-7xl">
+              <p className="text-5xl sm:text-7xl">Premium.</p>
+              <p className="flex gap-x-4 text-5xl sm:text-7xl">
                 <span className="text-orange-300">Coffee</span>
                 <span className="">Shop</span>
               </p>
               {/* <p className="text-7xl flex sm:hidden">Shop</p> */}
             </div>
-            <div className="pl-8 text-slate-100 text-3xl flex flex-col gap-y-2 justify-center items-start gap-x-1 w-[375px] h-[100px] my-0 text-wrap">
+            <div className="pl-8 text-slate-100 text-2xl sm:text-3xl flex flex-col gap-y-2 justify-center items-center sm:items-start gap-x-1 w-[375px] h-[100px] my-0 text-wrap">
               <p>
                 Premium <span className="bg-[#1B1B1B]">Coffee,</span>
               </p>

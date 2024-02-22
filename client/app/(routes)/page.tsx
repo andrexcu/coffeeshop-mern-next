@@ -12,6 +12,13 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contactSection");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   useEffect(() => {
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
@@ -30,7 +37,7 @@ export default function Home() {
         {/* <AnimatePresence mode="wait">
           {isLoading && <Preloader />}
         </AnimatePresence> */}
-        <Hero />
+        <Hero scrollToContact={scrollToContact} />
         <section
           className="relative sm:px-16 px-8 sm:py-16 py-12 bg-cover"
           style={{
@@ -40,9 +47,18 @@ export default function Home() {
         >
           <About />
         </section>
+
+        <section
+          id="contactSection"
+          className="bg-stone-950 relative sm:px-16 px-8 pt-12 pb-8 flex justify-center items-center"
+        >
+          <Contact />
+        </section>
+
         <section className="sm:px-16 px-8 sm:py-16 py-12">
           <WhyUs />
         </section>
+
         <section
           className="relative sm:px-16 px-8 sm:py-24 py-12 bg-cover"
           style={{
@@ -52,9 +68,7 @@ export default function Home() {
         >
           <Info />
         </section>
-        <section className="relative sm:px-16 px-8 pt-12 pb-8 flex justify-center items-center">
-          <Contact />
-        </section>
+
         <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
           <Footer />
         </section>

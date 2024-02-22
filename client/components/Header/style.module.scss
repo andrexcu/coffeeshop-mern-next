@@ -66,7 +66,7 @@
     position: absolute;
     width: 5px;
     height: 5px;
-    top: 35px;
+    // top: 35px;
     left: 50%;
     background-color: #cbd5e1;
     border-radius: 50%;
@@ -77,7 +77,7 @@
 
 .headerButtonContainer {
   position: fixed;
-  top: 0px;
+  bottom: 0px;
   right: 0px;
   z-index: 4;
 

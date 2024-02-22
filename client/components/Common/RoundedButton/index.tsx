@@ -6,7 +6,7 @@ import Magnetic from "../Magnetic";
 
 export default function index({
   children,
-  backgroundColor = "#455CE9",
+  backgroundColor = "#292524",
   ...attributes
 }: any) {
   const circle = useRef(null);
@@ -55,8 +55,16 @@ export default function index({
         <div
           ref={circle}
           style={{ backgroundColor }}
-          className={styles.circle}
+          className={`w-full h-[150%] absolute rounded-xl top-full`}
         ></div>
+
+        {/* .circle {
+  width: 100%;
+  height: 150%;
+  position: absolute;
+  border-radius: 50%;
+  top: 100%;
+} */}
       </div>
     </Magnetic>
   );
