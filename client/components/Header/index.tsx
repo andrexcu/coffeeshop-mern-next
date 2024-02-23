@@ -8,6 +8,7 @@ import { ChevronUp, Menu, ShoppingCart } from "lucide-react";
 import Rounded from "@/components/Common/RoundedButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
 export default function index() {
   const [showBackground, setShowBackground] = useState(false);
@@ -94,16 +95,19 @@ export default function index() {
         }`}
       >
         <div
-          className={`${styles.header} w-full max-w-7xl flex items-center justify-between p-4 text-slate-300 cursor-pointer`}
+          className={`${styles.header} w-full max-w-7xl flex items-center justify-between p-4 text-slate-300`}
         >
           {/* <div className="flex gap-x-2 text-2xl">COFFEE SHOP</div> */}
-          <div
+          <Link
+            href={`/`}
+            scroll={false}
             className={`border-2 border-slate-200 py-8 w-[156px] px-2 bg-zinc-950 flex justify-center items-center
           ${
             !showBackground
               ? "h-24 transition-all ease-in duration-300 "
               : "transition-all duration-300 ease-in h-16 w-[50px] "
           }`}
+            onClick={scrollToTop}
           >
             <div className={`${styles.logo} flex  `}>
               {/* <p className={styles.copyright}>©</p> */}
@@ -117,24 +121,26 @@ export default function index() {
                 <p className={` text-3xl`}>Shop</p>
               </div>
             </div>
-          </div>
+          </Link>
           <div
-            className={`opacity-100 hidden sm:flex items-center justify-center gap-x-6 text-lg cursor-pointer uppercase`}
+            className={`bg-black px-4 rounded-full opacity-100 hidden sm:flex items-center justify-center gap-x-6 text-lg cursor-pointer uppercase`}
           >
             <Magnetic>
-              <div className={styles.el}>
-                <a>Login</a>
+              <div className={`${styles.el} hover:text-orange-300`}>
+                <Link href={`/login`}>Login</Link>
                 <div className={styles.indicator}></div>
               </div>
             </Magnetic>
             <Magnetic>
-              <div className={styles.el}>
+              <div className={`${styles.el} hover:text-orange-300`}>
                 <a>Order</a>
                 <div className={styles.indicator}></div>
               </div>
             </Magnetic>
             <Magnetic>
-              <div className={`${styles.el} p-4 flex rounded-full bg-zinc-950`}>
+              <div
+                className={`${styles.el} p-4 flex rounded-full bg-zinc-950 hover:bg-stone-900`}
+              >
                 <ShoppingCart className="h-6 w-6" />
               </div>
             </Magnetic>

@@ -34,9 +34,9 @@ export default function Home() {
   return (
     <>
       <div className="main">
-        {/* <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
           {isLoading && <Preloader />}
-        </AnimatePresence> */}
+        </AnimatePresence>
         <Hero scrollToContact={scrollToContact} />
         <section
           className="relative sm:px-16 px-8 sm:py-16 py-12 bg-cover"
@@ -46,13 +46,6 @@ export default function Home() {
           }}
         >
           <About />
-        </section>
-
-        <section
-          id="contactSection"
-          className="bg-stone-950 relative sm:px-16 px-8 pt-12 pb-8 flex justify-center items-center"
-        >
-          <Contact />
         </section>
 
         <section className="sm:px-16 px-8 sm:py-16 py-12">
@@ -68,9 +61,11 @@ export default function Home() {
         >
           <Info />
         </section>
-
-        <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
-          <Footer />
+        <section
+          id="contactSection"
+          className="bg-stone-950 relative sm:px-16 px-8 pt-12 pb-8 flex justify-center items-center"
+        >
+          <Contact />
         </section>
       </div>
     </>

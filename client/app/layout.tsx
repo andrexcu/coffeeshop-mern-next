@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Sections/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,9 @@ export default function RootLayout({
       <body className={` ${inter.className} bg-stone-800 relative `}>
         <Header />
         <div className="overflow-x-hidden">{children}</div>
+        <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
+          <Footer />
+        </section>
       </body>
     </html>
   );

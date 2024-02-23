@@ -5,14 +5,15 @@ import { motion } from "framer-motion";
 import { opacity, slideUp } from "./anim";
 import Image from "next/image";
 
-const words = [
-  { Brewing: "淹れています" },
-  { "the perfect": "最適な" },
-  { Experience: "体験を" },
-  { "With Our": "私たちの" },
-  { Coffee: "コーヒーで" },
-];
+// const words = [
+//   { Brewing: "淹れています" },
+//   { "the perfect": "最適な" },
+//   { Experience: "体験を" },
+//   { "With Our": "私たちの" },
+//   { Coffee: "コーヒーで" },
+// ];
 
+const words = ["Brewing", "The Perfect", "Experience", "With Our", "Coffee"];
 export default function Index() {
   const [index, setIndex] = useState(0);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
@@ -69,10 +70,11 @@ export default function Index() {
             <span className="flex items-center flex-col border border-slate-200 p-4 min-w-72">
               <span className="flex items-center justify-center">
                 <p></p>
+                {words[index]}
 
-                {Object.keys(words[index])[0]}
+                {/* {Object.keys(words[index])[0]} */}
               </span>
-              {Object.values(words[index])[0]}
+              {/* {Object.values(words[index])[0]} */}
             </span>
             <span className="relative w-48 h-48">
               <Image

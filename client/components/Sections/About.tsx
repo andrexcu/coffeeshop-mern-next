@@ -9,9 +9,9 @@ const About = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-80"></div>
       <div className="relative flex justify-center items-center ">
         {/* About */}
-        <div className="flex flex-col lg:flex-row justify-center items-center mx-auto max-w-7xl my-12 lg:h-[600px] z-10">
+        <div className="flex flex-col lg:flex-row justify-center items-center mx-auto max-w-7xl my-12 lg:h-[600px] z-10 gap-x-12">
           {/* <div className="flex flex-col lg:flex-row z-10 border"> */}
-          <div className="flex flex-col items-start justify-start gap-y-4 p-4 w-full lg:w-1/2 h-full text-slate-200">
+          <div className="flex flex-col items-start justify-start gap-y-4 p-4 w-full lg:w-1/2 h-full text-slate-200 text-start">
             <p className={`${kaushan.className} text-4xl`}>
               Welcome to Premium Coffee Shop, where every cup tells a story.
             </p>

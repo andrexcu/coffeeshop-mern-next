@@ -35,23 +35,23 @@
         }
       }
     }
-    &:hover {
-      .copyright {
-        transform: rotate(360deg);
-      }
-      .name {
-        padding-right: 30px;
-        .premium {
-          transform: translateX(-100%);
-        }
-        .coffee {
-          transform: translateX(-130px);
-        }
-        .shop {
-          transform: translateX(-56px);
-        }
-      }
-    }
+    // &:hover {
+    //   .copyright {
+    //     transform: rotate(360deg);
+    //   }
+    //   .name {
+    //     padding-right: 30px;
+    //     .premium {
+    //       transform: translateX(-100%);
+    //     }
+    //     .coffee {
+    //       transform: translateX(-130px);
+    //     }
+    //     .shop {
+    //       transform: translateX(-56px);
+    //     }
+    //   }
+    // }
   }
 }
 
