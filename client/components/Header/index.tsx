@@ -91,7 +91,7 @@ export default function index() {
         ${
           !showBackground
             ? "h-32 transition-all ease-in duration-300 "
-            : "transition-all duration-300 ease-in h-[90px] "
+            : "transition-all duration-300 ease-in h-[80px] "
         }`}
       >
         <div
@@ -101,11 +101,11 @@ export default function index() {
           <Link
             href={`/`}
             scroll={false}
-            className={`border-2 border-slate-200 py-8 w-[156px] px-2 bg-zinc-950 flex justify-center items-center
+            className={`border-2 border-slate-200 py-6 w-[156px] px-2 bg-zinc-950 flex justify-center items-center
           ${
             !showBackground
               ? "h-24 transition-all ease-in duration-300 "
-              : "transition-all duration-300 ease-in h-16 w-[50px] "
+              : "transition-all duration-300 ease-in h-10 w-[50px] "
           }`}
             onClick={scrollToTop}
           >

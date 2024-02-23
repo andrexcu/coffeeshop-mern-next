@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className} bg-stone-800 relative `}>
+      <body className={` ${inter.className} bg-stone-950 relative `}>
         <Header />
         <div className="overflow-x-hidden">{children}</div>
         <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
