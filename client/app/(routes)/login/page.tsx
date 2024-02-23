@@ -50,7 +50,7 @@ const Page = () => {
   //   },
   // });
 
-  const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
+  const onSubmit = ({ username, password }: TAuthCredentialsValidator) => {
     // signIn({ email, password });
   };
 
@@ -82,14 +82,14 @@ const Page = () => {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     className={cn({
-                      "focus-visible:ring-red-500": errors.email,
+                      "focus-visible:ring-red-500": errors.username,
                     })}
-                    placeholder="you@example.com"
-                    {...register("email")}
+                    placeholder="Username"
+                    {...register("username")}
                   />
-                  {errors?.email && (
+                  {errors?.username && (
                     <p className="text-sm text-red-500">
-                      {errors.email.message}
+                      {errors.username.message}
                     </p>
                   )}
                 </div>
