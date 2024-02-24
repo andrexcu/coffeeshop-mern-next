@@ -1,7 +1,7 @@
 "use client";
 import { lobsterTwo } from "@/app/fonts";
 import Magnetic from "@/components/Common/Magnetic";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./style.module.scss";
 import { ChevronUp, Menu, ShoppingCart } from "lucide-react";
@@ -9,12 +9,17 @@ import Rounded from "@/components/Common/RoundedButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { UserType } from "@/lib/types";
+import getCurrentUser from "@/actions/get-current-user";
+import axios from "axios";
 
-export default function index() {
+export default function index({ username }: UserType) {
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
   const button = useRef(null);
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -69,6 +74,7 @@ export default function index() {
       },
     });
   }, [isActive]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 10) {
@@ -84,6 +90,38 @@ export default function index() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const userData = await getCurrentUser();
+      setCurrentUser(userData);
+    };
+    getUserData();
+  }, []);
+  // if (username) {
+  //   console.log(username);
+  // }
+
+  const logoutUser = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json", // Adjust the content type if needed
+          },
+          // Add a body if your server expects one
+          // body: JSON.stringify({}),
+        }
+      );
+      location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
     <div className={`relative flex justify-center`}>
       <div
@@ -127,7 +165,12 @@ export default function index() {
           >
             <Magnetic>
               <div className={`${styles.el} hover:text-orange-300`}>
-                <Link href={`/login`}>Login</Link>
+                {currentUser ? (
+                  <div onClick={logoutUser}>logout</div>
+                ) : (
+                  <Link href={`/login`}>Login</Link>
+                )}
+
                 <div className={styles.indicator}></div>
               </div>
             </Magnetic>

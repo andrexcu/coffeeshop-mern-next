@@ -31,11 +31,7 @@ const logoutUser = async (req: Request, res: Response) => {
 };
 
 const checkAuthStatus = async (req: Request, res: Response) => {
-  if (req.isAuthenticated()) {
-    return res.json(req.user);
-  }
-
-  return res.json({ msg: "no currently logged in user" });
+  return res.json(req.user);
 };
 
 export { loginUser, logoutUser, checkAuthStatus };

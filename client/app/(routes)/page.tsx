@@ -67,6 +67,9 @@ export default function Home() {
         >
           <Contact />
         </section>
+        <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
+          <Footer />
+        </section>
       </div>
     </>
   );
