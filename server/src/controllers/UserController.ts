@@ -17,6 +17,7 @@ const createUser = async (req: Request, res: Response) => {
   const newUser = new User(data);
   try {
     const savedUser = await newUser.save();
+    req.session.id = savedUser.id;
     return res.status(201).send(savedUser);
   } catch (err) {
     return res.sendStatus(400);

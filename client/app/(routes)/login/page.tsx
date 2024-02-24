@@ -1,5 +1,6 @@
 "use client";
 
+import getCurrentUser from "@/actions/get-current-user";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,13 +10,35 @@ import {
   TAuthCredentialsValidator,
 } from "@/lib/validators/account-credentials-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const Page = () => {
+  const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const userData = await getCurrentUser();
+  //       // console.log(userData);
+  //       // if (!userData) console.log("no currently logged in user");
+  //       setUser(userData);
+  //       // console.log(user);
+  //     } catch (error) {
+  //       // setError(error.message);
+  //       console.log("no currently logged in user");
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [user]); // Empty dependency array ensures this effect runs once when the component mounts
+
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,34 +47,53 @@ const Page = () => {
     resolver: zodResolver(AuthCredentialsValidator),
   });
 
-  // const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
-  //   onSuccess: () => {
-  //     toast.success("Signed in successfully");
-
-  //     router.refresh();
-
-  //     if (origin) {
-  //       router.push(`/${origin}`);
-  //       return;
-  //     }
-
-  //     if (isSeller) {
-  //       router.push("/sell");
-  //       return;
-  //     }
-
-  //     router.push("/");
-  //   },
-
-  //   onError: (err) => {
-  //     if (err.data?.code === "UNAUTHORIZED") {
-  //       toast.error("Invalid email or password.");
-  //     }
-  //   },
-  // });
-
-  const onSubmit = ({ username, password }: TAuthCredentialsValidator) => {
+  const onSubmit = async ({
+    username,
+    password,
+  }: TAuthCredentialsValidator) => {
     // signIn({ email, password });
+
+    try {
+      setIsLoading(true);
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ username, password }),
+      //   }
+      // );
+      // const res = await response.json();
+      // console.log(res); // Log the response
+      // return response.json();
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+
+      const userData = await getCurrentUser();
+
+      console.log("userdata:", userData);
+      // setUser(response.data);
+      // toast.success("successfully logged in!");
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const checkUser = () => {
+    console.log(user);
   };
 
   return (
@@ -79,7 +121,7 @@ const Page = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="username">Username</Label>
                   <Input
                     className={cn({
                       "focus-visible:ring-red-500": errors.username,
@@ -131,6 +173,7 @@ const Page = () => {
                 Continue as admin
               </Button>
             )} */}
+            <Button onClick={checkUser}>check user</Button>
           </div>
         </div>
       </div>

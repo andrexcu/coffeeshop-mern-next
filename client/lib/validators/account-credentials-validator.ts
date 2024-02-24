@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const AuthCredentialsValidator = z.object({
-  username: z.string().email(),
+  username: z.string().refine((value) => value.trim() !== "", {
+    message: "Username cannot be empty",
+  }),
   password: z
     .string()
     .min(8, { message: "Password must be atleast 8 characters long." }),

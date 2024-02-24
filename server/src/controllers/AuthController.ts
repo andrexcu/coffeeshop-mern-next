@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import { User } from "../models/User";
 
 const loginUser = async (req: Request, res: Response) => {
-  res.sendStatus(200);
+  res.json(req.user);
 };
 
 const logoutUser = async (req: Request, res: Response) => {
@@ -30,8 +31,11 @@ const logoutUser = async (req: Request, res: Response) => {
 };
 
 const checkAuthStatus = async (req: Request, res: Response) => {
-  console.log(req.session);
-  return res.json(req.user);
+  if (req.isAuthenticated()) {
+    return res.json(req.user);
+  }
+
+  return res.json({ msg: "no currently logged in user" });
 };
 
 export { loginUser, logoutUser, checkAuthStatus };
