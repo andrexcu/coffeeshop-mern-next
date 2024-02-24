@@ -4,7 +4,7 @@ import getCurrentUser from "@/actions/get-current-user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const Hydration = ({ children }: { children: React.ReactNode }) => {
+const LoginHydration = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -35,4 +35,4 @@ const Hydration = ({ children }: { children: React.ReactNode }) => {
   }
 };
 
-export default Hydration;
+export default LoginHydration;

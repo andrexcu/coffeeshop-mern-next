@@ -17,8 +17,11 @@ import {
 import { toast } from "sonner";
 import { ZodError } from "zod";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useState } from "react";
 
 const Page = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -29,8 +32,28 @@ const Page = () => {
 
   const router = useRouter();
 
-  const onSubmit = ({ username, email, password }: TcreateUserSchema) => {
-    // mutate({ email, password });
+  const onSubmit = async ({ username, email, password }: TcreateUserSchema) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      location.reload();
+      router.push("/login");
+      toast.success("account successfully created");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

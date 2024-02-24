@@ -1,7 +1,7 @@
 "use client";
 
 import getCurrentUser from "@/actions/get-current-user";
-import Hydration from "@/components/ui/Hydration";
+import LoginHydration from "@/components/ui/LoginHydration";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -82,7 +82,7 @@ const Page = () => {
   };
 
   return (
-    <Hydration>
+    <LoginHydration>
       <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">
         {!user && (
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -164,7 +164,7 @@ const Page = () => {
           </div>
         )}
       </div>
-    </Hydration>
+    </LoginHydration>
   );
 };
 

@@ -4,8 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Sections/Footer";
 import getCurrentUser from "@/actions/get-current-user";
-import Hydration from "@/components/ui/Hydration";
 import { Toaster } from "@/components/ui/sonner";
+import NavbarHydration from "@/components/ui/NavbarHydration";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +26,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={` ${inter.className} bg-stone-950 relative `}>
         <Toaster position="bottom-right" />
-        <Header />
-        <div className="overflow-x-hidden">{children}</div>
+        <NavbarHydration>
+          <Header />
+
+          <div className="overflow-x-hidden">{children}</div>
+        </NavbarHydration>
       </body>
     </html>
   );
