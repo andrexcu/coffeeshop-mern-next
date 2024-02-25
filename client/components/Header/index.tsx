@@ -145,7 +145,7 @@ export default function index({ username }: UserType) {
               </Magnetic>
               <Magnetic>
                 <div className={`${styles.el} hover:text-orange-300`}>
-                  <a>Order</a>
+                  <Link href={`/order`}>Order</Link>
                   <div className={styles.indicator}></div>
                 </div>
               </Magnetic>

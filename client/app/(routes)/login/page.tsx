@@ -82,6 +82,7 @@ const Page = () => {
   useEffect(() => {
     const checkUser = async () => {
       try {
+        setIsLoading(true);
         const currentUser = await getCurrentUser();
         setUser(currentUser);
       } catch (error) {
@@ -91,7 +92,6 @@ const Page = () => {
       }
     };
     checkUser();
-    // setIsMounted(true);
   }, []);
 
   useEffect(() => {
