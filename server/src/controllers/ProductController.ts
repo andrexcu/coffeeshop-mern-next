@@ -29,11 +29,12 @@ const createProduct = async (req: Request, res: Response) => {
 
     const data = matchedData(req);
 
-    const { name, price } = data;
+    const { name, price, image } = data;
 
     const newProduct = new Product({
       name,
       price,
+      image,
     });
 
     const createdProduct = await newProduct.save();

@@ -12,6 +12,12 @@ export const createProductSchema = [
     .withMessage("price cannot be empty")
     .isNumeric()
     .withMessage("price must be a number"),
+
+  body("image")
+    .notEmpty()
+    .withMessage("product image cannot be empty")
+    .isString()
+    .withMessage("image url must be a string"),
 ];
 
 export const updateProductSchema = [
