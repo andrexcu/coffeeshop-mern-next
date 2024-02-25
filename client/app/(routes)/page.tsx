@@ -7,6 +7,7 @@ import Footer from "@/components/Sections/Footer";
 import Hero from "@/components/Sections/Hero";
 import Info from "@/components/Sections/Info";
 import WhyUs from "@/components/Sections/WhyUs";
+import Hydration from "@/components/ui/Hydration";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -32,7 +33,7 @@ export default function Home() {
   //   })();
   // }, []);
   return (
-    <>
+    <Hydration>
       <div className="main">
         {/* <AnimatePresence mode="wait">
           {isLoading && <Preloader />}
@@ -71,6 +72,6 @@ export default function Home() {
           <Footer />
         </section>
       </div>
-    </>
+    </Hydration>
   );
 }

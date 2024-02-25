@@ -24,15 +24,20 @@ const LoginHydration = ({ children }: { children: React.ReactNode }) => {
     };
 
     checkUser();
-    setIsMounted(true);
   }, []);
 
-  if (isLoading) return null;
-  // return <div className="h-dvh text-white">PAGE IS LOADING</div>;
-  if (isMounted) {
+  useEffect(() => {
     if (user) router.push("/");
-    if (!user) return <>{children}</>;
-  }
+  }, [user]);
+
+  if (isLoading) return null;
+
+  // return <div className="h-dvh text-white">PAGE IS LOADING</div>;
+  // if (isMounted) {
+  //   return null;
+  // }
+  if (user) return null;
+  if (!user) return <>{children}</>;
 };
 
 export default LoginHydration;
