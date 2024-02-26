@@ -5,7 +5,26 @@ import { ProductRequest } from "../middlewares/ProductMiddleware";
 
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find().lean(); // Use lean() for a lightweight, plain JavaScript object
+    const {
+      type,
+      popular,
+      special,
+    }: { type?: string; popular?: string; special?: string } = req.query;
+
+    // Create a filter object based on the presence of the parameters
+    const filter: any = {};
+
+    if (type) {
+      filter.type = type;
+    }
+    if (popular !== undefined) {
+      filter.popular = popular === "true"; // Convert to boolean
+    }
+    if (special !== undefined) {
+      filter.special = special === "true"; // Convert to boolean
+    }
+
+    const products = await Product.find(filter).lean();
 
     if (products.length === 0) {
       return res.status(404).json({ error: "No products found" });
@@ -29,12 +48,16 @@ const createProduct = async (req: Request, res: Response) => {
 
     const data = matchedData(req);
 
-    const { name, price, image } = data;
-
+    const { name, price, image, popular, onMenu, special, type } = data;
+    console.log("Data from request:", data);
     const newProduct = new Product({
       name,
       price,
       image,
+      popular,
+      onMenu,
+      special,
+      type,
     });
 
     const createdProduct = await newProduct.save();

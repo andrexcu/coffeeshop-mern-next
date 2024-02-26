@@ -120,7 +120,7 @@ export default function index({ username }: UserType) {
           }`}
               onClick={scrollToTop}
             >
-              <div className={`${styles.logo} flex  `}>
+              <div className={`${styles.logo} flex select-none outline-none`}>
                 <div
                   className={`${styles.name} text-3xl ${lobsterTwo.className}`}
                 >

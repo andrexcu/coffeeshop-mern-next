@@ -6,6 +6,10 @@ const productSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   image: { type: String },
+  onMenu: { type: Boolean, default: false, required: true },
+  popular: { type: Boolean, default: false, required: true },
+  special: { type: Boolean, default: false, required: true },
+  type: { type: String, enum: ["classic", "choco", "mocha"] },
 });
 
 const Product = mongoose.model("Product", productSchema);
