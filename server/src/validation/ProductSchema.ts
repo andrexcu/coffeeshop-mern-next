@@ -38,6 +38,12 @@ export const createProductSchema = [
     .withMessage(
       "Invalid type. Allowed values are 'classic', 'choco', 'mocha'"
     ),
+  body("description")
+    .optional()
+    .notEmpty()
+    .withMessage("description cannot be empty")
+    .isString()
+    .withMessage("description must be a string"),
 ];
 
 export const updateProductSchema = [
@@ -66,6 +72,7 @@ export const updateProductSchema = [
     .isBoolean()
     .withMessage("Popular must be a boolean"),
   body("type")
+    .optional()
     .notEmpty()
     .withMessage("Product type cannot be empty")
     .isString()
@@ -74,4 +81,10 @@ export const updateProductSchema = [
     .withMessage(
       "Invalid type. Allowed values are 'classic', 'choco', 'mocha'"
     ),
+  body("description")
+    .optional()
+    .notEmpty()
+    .withMessage("description cannot be empty")
+    .isString()
+    .withMessage("description must be a string"),
 ];

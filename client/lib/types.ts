@@ -18,5 +18,6 @@ export interface ProductType {
   popular?: boolean;
   onMenu?: boolean;
   special?: boolean;
-  type: ProductTypeEnum;
+  type?: ProductTypeEnum;
+  description?: string;
 }

@@ -17,14 +17,12 @@ const MostOrdered = () => {
     fetchAllProducts();
   }, []);
   return (
-    <div className="w-full">
+    <div className="w-full py-20">
       <SectionTitle title="Popular" subtitle="Most ordered coffee" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-8">
         {products?.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
-        {/* MENU SECTION */}
-        {/* SPECIAL SECTION */}
       </div>
     </div>
   );
