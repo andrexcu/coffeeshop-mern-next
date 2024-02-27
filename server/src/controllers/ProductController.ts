@@ -6,16 +6,16 @@ import { ProductRequest } from "../middlewares/ProductMiddleware";
 const getProducts = async (req: Request, res: Response) => {
   try {
     const {
-      type,
+      onMenu,
       popular,
       special,
-    }: { type?: string; popular?: string; special?: string } = req.query;
+    }: { onMenu?: string; popular?: string; special?: string } = req.query;
 
     // Create a filter object based on the presence of the parameters
     const filter: any = {};
 
-    if (type) {
-      filter.type = type;
+    if (onMenu !== undefined) {
+      filter.onMenu = onMenu === "true";
     }
     if (popular !== undefined) {
       filter.popular = popular === "true"; // Convert to boolean

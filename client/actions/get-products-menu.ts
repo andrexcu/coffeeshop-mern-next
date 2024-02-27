@@ -1,11 +1,11 @@
 import { ProductType } from "@/lib/types";
 import axios from "axios";
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}/products?onMenu=true`;
 
-const getProducts = async (): Promise<ProductType[]> => {
+const getProductsMenu = async (): Promise<ProductType[]> => {
   const response = await axios.get(URL, { withCredentials: true });
   return response.data;
 };
 
-export default getProducts;
+export default getProductsMenu;
