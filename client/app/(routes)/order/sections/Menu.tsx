@@ -33,7 +33,7 @@ const Menu = () => {
   return (
     <div className="w-full py-8">
       <SectionTitle title="Our Menu" subtitle="Check Our Tasty Menu" />
-      <div className="flex justify-center items-center gap-8 text-white w-full py-4 ">
+      <div className="flex justify-center items-center gap-8 text-white w-full py-4">
         {MenuCategories.map((menu) => (
           <Magnetic key={menu.title}>
             <div className="el" onClick={() => setFilter(menu.type)}>

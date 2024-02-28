@@ -44,6 +44,12 @@ export const createProductSchema = [
     .withMessage("description cannot be empty")
     .isString()
     .withMessage("description must be a string"),
+  body("details")
+    .optional()
+    .notEmpty()
+    .withMessage("details cannot be empty")
+    .isString()
+    .withMessage("details must be a string"),
 ];
 
 export const updateProductSchema = [
@@ -87,4 +93,10 @@ export const updateProductSchema = [
     .withMessage("description cannot be empty")
     .isString()
     .withMessage("description must be a string"),
+  body("details")
+    .optional()
+    .notEmpty()
+    .withMessage("details cannot be empty")
+    .isString()
+    .withMessage("details must be a string"),
 ];

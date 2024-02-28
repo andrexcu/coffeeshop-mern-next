@@ -48,8 +48,17 @@ const createProduct = async (req: Request, res: Response) => {
 
     const data = matchedData(req);
 
-    const { name, price, image, popular, onMenu, special, type, description } =
-      data;
+    const {
+      name,
+      price,
+      image,
+      popular,
+      onMenu,
+      special,
+      type,
+      description,
+      details,
+    } = data;
     console.log("Data from request:", data);
     const newProduct = new Product({
       name,
@@ -60,6 +69,7 @@ const createProduct = async (req: Request, res: Response) => {
       special,
       type,
       description,
+      details,
     });
 
     const createdProduct = await newProduct.save();

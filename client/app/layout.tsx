@@ -30,6 +30,9 @@ export default async function RootLayout({
           <Header />
         </Hydration>
         <div className="overflow-x-hidden">{children}</div>
+        <section className="sm:px-16 px-8 sm:py-12 py-8 bg-neutral-950">
+          <Footer />
+        </section>
       </body>
     </html>
   );

@@ -18,7 +18,8 @@ export default function index({ username }: UserType) {
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
-  const button = useRef(null);
+  // const button = useRef({});
+  const button = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
@@ -30,6 +31,7 @@ export default function index({ username }: UserType) {
   };
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+
     gsap.to(button.current, {
       scrollTrigger: {
         trigger: document.documentElement,
@@ -51,7 +53,7 @@ export default function index({ username }: UserType) {
         },
       },
     });
-  }, []);
+  }, [button]);
 
   useEffect(() => {
     const handleScroll = () => {

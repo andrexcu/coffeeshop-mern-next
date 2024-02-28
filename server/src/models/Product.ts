@@ -11,6 +11,7 @@ const productSchema = new Schema({
   special: { type: Boolean, default: false, required: true },
   type: { type: String, enum: ["classic", "choco", "mocha"] },
   description: { type: String },
+  details: { type: String },
 });
 
 const Product = mongoose.model("Product", productSchema);

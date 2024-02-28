@@ -20,4 +20,5 @@ export interface ProductType {
   special?: boolean;
   type?: ProductTypeEnum;
   description?: string;
+  details?: string;
 }
