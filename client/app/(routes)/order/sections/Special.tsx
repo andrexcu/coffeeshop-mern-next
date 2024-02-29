@@ -25,32 +25,34 @@ const Special = () => {
       <div className="container">
         <SectionTitle title="Specials" subtitle="Check Our Specials" />
         <div className="flex">
-          <div className="grid grid-cols-12">
-            <div className="col-span-3">
-              <ul className="flex flex-col">
+          <div className="mt-16 flex flex-col space-y-12 lg:space-y-0 lg:flex-row sm:gap-4 gap-14">
+            <div className="w-full lg:w-3/12">
+              <ul className="h-full w-full flex flex-col ">
                 {products?.map((product) => (
                   <li
-                    className="px-[12px] py-[15px] transition duration-300 text-[#fff] border-r-2 
-                    border-[#cda45e] font-semibold text-base cursor-pointer group "
+                    className={`px-[12px] py-[15px] transition duration-300 text-[#fff] lg:border-r-2 
+                    border-[#cda45e] font-semibold text-base cursor-pointer group hover:bg-[#cda45e]
+                    ${
+                      activeFilter === product._id
+                        ? "bg-[#cda45e] border-l-0 lg:border-l-8 lg:border-r-0 border-r-8 border-[#3D2B1F]"
+                        : ""
+                    }`}
                     key={product._id}
                     onClick={() => setActiveFilter(product._id)}
                   >
                     <a className={``}></a>
-                    <p className="group-hover:text-[#cda45e]">{product.name}</p>
+                    <p className="group-hover:text-black">{product.name}</p>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="col-span-9 mt-4 lg:mt-0 ">
+            <div className="w-full lg:w-9/12">
               {products?.map((product) => (
-                <div
+                <SpecialProduct
                   key={product._id}
-                  className={`h-full px-4 ${
-                    activeFilter === product._id ? "flex" : "hidden"
-                  }`}
-                >
-                  <SpecialProduct product={product} />
-                </div>
+                  isActive={activeFilter === product._id}
+                  product={product}
+                />
               ))}
             </div>
           </div>

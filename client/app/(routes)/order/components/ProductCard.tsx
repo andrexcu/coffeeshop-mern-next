@@ -6,13 +6,13 @@ interface ProductCardProps {
 }
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="text-white h-[350px] w-full border-4 border-[#1a1814] relative overflow-hidden">
+    <div className="text-white w-full border-4 border-[#1a1814] overflow-hidden">
       <Image
-        fill
         src={product.image}
-        alt=""
-        sizes="100vw, 100vh"
-        className="object-cover transition duration-1000 ease-in hover:scale-110 w-full h-full"
+        alt="product image"
+        width={282}
+        height={282}
+        className="object-contain transition duration-1000 ease-in hover:scale-110 w-full h-full"
         placeholder="blur"
         blurDataURL={product.image}
       />

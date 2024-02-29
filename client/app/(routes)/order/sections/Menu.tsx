@@ -23,9 +23,9 @@ const Menu = () => {
 
   const MenuCategories = [
     { title: "All", type: "all" },
-    { title: "Classic Brews", type: "classic" },
-    { title: "Choco Delights", type: "choco" },
-    { title: "Mocha Indulgence", type: "mocha" },
+    { title: "Classic", type: "classic" },
+    { title: "Choco", type: "choco" },
+    { title: "Mocha", type: "mocha" },
   ];
 
   const active = products?.filter((product) => product.type === filter);
@@ -33,7 +33,7 @@ const Menu = () => {
   return (
     <div className="w-full py-8">
       <SectionTitle title="Our Menu" subtitle="Check Our Tasty Menu" />
-      <div className="flex justify-center items-center gap-8 text-white w-full py-4">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-8 text-white w-full py-4">
         {MenuCategories.map((menu) => (
           <Magnetic key={menu.title}>
             <div className="el" onClick={() => setFilter(menu.type)}>

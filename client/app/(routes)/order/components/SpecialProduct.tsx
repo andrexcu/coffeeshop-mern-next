@@ -5,24 +5,27 @@ import Image from "next/image";
 
 interface SpecialProductType {
   product: ProductType;
+  isActive: boolean;
 }
 
-const SpecialProduct = ({ product }: SpecialProductType) => {
+const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
+  if (!isActive) return null;
   return (
-    <div className="grid grid-cols-12 ">
-      <div className="lg:col-span-8 details order-2 lg:order-1">
+    <div className="overflow-hiddden flex flex-col-reverse items-center lg:items-start lg:flex-row w-full gap-y-8">
+      <div className="w-full lg:w-8/12 object-contain flex flex-col gap-y-4">
         <h3 className="text-2xl text-[#aaaaaa]">{product.name}</h3>
         <p className="italic text-[#aaaaaa]">{product.description}</p>
         <p className="text-[#aaaaaa] mb-0">{product.details}</p>
       </div>
-      <div className="relative lg:col-span-4 text-center order-1 lg:order-2 overflow-hidden rounded-full">
+      <div className="overflow-hidden flex w-full lg:w-4/12 justify-center">
         <Image
           src={product.image}
-          sizes="100vw, 100vh"
-          fill
+          width={282}
+          height={282}
           alt="product image"
           placeholder="blur"
           blurDataURL={product.image}
+          className="rounded-full object-contain w-auto h-auto "
         />
       </div>
     </div>
