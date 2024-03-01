@@ -21,8 +21,8 @@ const Special = () => {
   }, []);
 
   return (
-    <div className="w-full py-20 overflow-hidden">
-      <div className="container">
+    <div className="w-full py-20 overflow-hidden ">
+      <div className="container px-0">
         <SectionTitle title="Specials" subtitle="Check Our Specials" />
         <div className="flex">
           <div className="mt-16 flex flex-col space-y-12 lg:space-y-0 lg:flex-row sm:gap-4 gap-14">

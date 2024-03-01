@@ -84,7 +84,7 @@ const Contact = () => {
               style={{ resize: "none" }}
               placeholder="Message"
             ></textarea>
-            <button className="text-white w-48 py-2 col-span-2 rounded-full bg-orange-300 transition duration-300 ease-in hover:bg-stone-800">
+            <button className="text-white w-full sm:w-48 py-2 col-span-2 rounded-full bg-orange-300 transition duration-300 ease-in hover:bg-stone-800">
               Send Message
             </button>
           </div>

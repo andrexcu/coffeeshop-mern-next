@@ -50,9 +50,12 @@ const Hero = ({ scrollToContact }: HeroProps) => {
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               {/* bg-[#3D2B1F]/90 */}
-              <div className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer  text-center transition duration-300 ease-in hover:bg-[#3D2B1F]">
+              <Link
+                href="/order"
+                className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer  text-center transition duration-300 ease-in hover:bg-[#3D2B1F]"
+              >
                 ORDER NOW
-              </div>
+              </Link>
               <div
                 onClick={scrollToContact}
                 className="border-2 border-orange-300 bg-zinc-950/50 text-slate-200 p-4 cursor-pointer text-center transition duration-300 ease-in hover:bg-[#3D2B1F]"
@@ -63,7 +66,7 @@ const Hero = ({ scrollToContact }: HeroProps) => {
           </div>
           <div className="right-4 ">
             <div
-              className={`flex flex-col items-center sm:items-start sm:border-l-4 border-[#1B1B1B] text-slate-200 ${lobsterTwo.className} p-4 `}
+              className={`flex flex-col items-center sm:items-start lg:border-l-4 border-[#1B1B1B] text-slate-200 ${lobsterTwo.className} p-4 `}
             >
               <p className="text-5xl sm:text-7xl">Premium.</p>
               <p className="flex gap-x-4 text-5xl sm:text-7xl">

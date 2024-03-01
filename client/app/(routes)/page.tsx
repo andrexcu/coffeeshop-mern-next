@@ -49,7 +49,7 @@ export default function Home() {
           <About />
         </section>
 
-        <section className="sm:px-16 px-8 sm:py-16 py-12">
+        <section className=" bg-stone-950 sm:px-16 px-8 sm:py-16 py-12 bg-cover">
           <WhyUs />
         </section>
 

@@ -17,13 +17,17 @@ const WhyUs = () => {
           {whyUs.map((item) => (
             <div
               key={item.id}
-              className={`bg-neutral-900 flex-col gap-y-8 justify-center p-6 ${
+              className={`bg-neutral-900/90 transition-colors duration-300 ease-in group hover:bg-[#cda45e] flex-col gap-y-8 justify-center p-6  ${
                 selected === item.id ? " flex" : "hidden lg:flex"
               }`}
             >
-              <h1 className="text-5xl text-orange-300">{`0${item.id}`}</h1>
-              <p className="text-slate-200">{item.title}</p>
-              <p className="text-slate-200">{item.content}</p>
+              <h1 className="text-5xl transition duration-300 ease-in group-hover:text-white group-hover:-translate-y-1 text-orange-300">{`0${item.id}`}</h1>
+              <p className="text-slate-200 transition duration-300 ease-in group-hover:-translate-y-1">
+                {item.title}
+              </p>
+              <p className="text-slate-200 transition duration-300 ease-in group-hover:-translate-y-1">
+                {item.content}
+              </p>
             </div>
           ))}
         </div>
