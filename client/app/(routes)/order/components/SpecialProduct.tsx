@@ -2,6 +2,7 @@ import { ProductType } from "@/lib/types";
 import React from "react";
 import "./SpecialProduct.css";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 interface SpecialProductType {
   product: ProductType;
@@ -16,6 +17,9 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
         <h3 className="text-2xl text-[#aaaaaa]">{product.name}</h3>
         <p className="italic text-[#aaaaaa]">{product.description}</p>
         <p className="text-[#aaaaaa] mb-0">{product.details}</p>
+        <Button variant="orange" className="w-full lg:w-1/5">
+          Add To Cart
+        </Button>
       </div>
       <div className="overflow-hidden flex w-full lg:w-4/12 justify-center">
         <Image
