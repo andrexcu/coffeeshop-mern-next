@@ -53,7 +53,7 @@ const Menu = () => {
         {products?.map((product) => (
           <div
             key={product._id}
-            className={`${
+            className={`transition duration-300 ease-in ${
               filter === "all" || filter === product.type ? "" : "hidden"
             }`}
           >

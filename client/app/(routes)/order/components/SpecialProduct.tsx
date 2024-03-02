@@ -12,7 +12,9 @@ interface SpecialProductType {
 const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
   if (!isActive) return null;
   return (
-    <div className="overflow-hiddden flex flex-col-reverse items-center lg:items-start lg:flex-row w-full gap-y-8">
+    <div
+      className={`overflow-hiddden flex flex-col-reverse items-center lg:items-start lg:flex-row w-full gap-y-8`}
+    >
       <div className="w-full lg:w-8/12 object-contain flex flex-col gap-y-4">
         <h3 className="text-2xl text-[#aaaaaa]">{product.name}</h3>
         <p className="italic text-[#aaaaaa]">{product.description}</p>
@@ -21,7 +23,7 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
           Add To Cart
         </Button>
       </div>
-      <div className="overflow-hidden flex w-full lg:w-4/12 justify-center">
+      <div className="p-2 overflow-hidden flex w-full lg:w-4/12 justify-center">
         <Image
           src={product.image}
           width={282}

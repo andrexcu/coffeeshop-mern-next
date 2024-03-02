@@ -13,8 +13,11 @@ import { UserType } from "@/lib/types";
 import getCurrentUser from "@/actions/get-current-user";
 import axios from "axios";
 import Hydration from "../ui/Hydration";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 
 export default function index({ username }: UserType) {
+  const { cartQuantity } = useShoppingCart();
+  console.log(cartQuantity);
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
@@ -156,6 +159,7 @@ export default function index({ username }: UserType) {
                   className={`${styles.el} p-4 flex rounded-full bg-zinc-950 hover:bg-stone-900`}
                 >
                   <ShoppingCart className="h-6 w-6" />
+                  <span>{cartQuantity}</span>
                 </div>
               </Magnetic>
             </div>

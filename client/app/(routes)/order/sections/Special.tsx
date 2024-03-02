@@ -25,7 +25,7 @@ const Special = () => {
       <div className="container px-0">
         <SectionTitle title="Specials" subtitle="Check Our Specials" />
         <div className="flex">
-          <div className="mt-16 flex flex-col space-y-12 lg:space-y-0 lg:flex-row sm:gap-4 gap-14">
+          <div className="mt-16 flex flex-col space-y-8 lg:space-y-0 lg:flex-row sm:gap-4 gap-14">
             <div className="w-full lg:w-3/12">
               <ul className="h-full w-full flex flex-col ">
                 {products?.map((product) => (

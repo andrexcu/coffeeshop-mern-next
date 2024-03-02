@@ -11,8 +11,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <Image
         src={product.image}
         alt="product image"
-        // width={282}
-        // height={282}
         fill
         sizes="100vh, 100vw"
         className="absolute top-0 object-cover transition duration-1000 ease-in hover:scale-110 w-full h-full"
