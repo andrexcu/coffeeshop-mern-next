@@ -15,9 +15,8 @@ import axios from "axios";
 import Hydration from "../ui/Hydration";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 
-export default function index({ username }: UserType) {
+export default function index() {
   const { cartQuantity } = useShoppingCart();
-  console.log(cartQuantity);
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();

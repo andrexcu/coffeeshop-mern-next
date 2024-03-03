@@ -6,7 +6,7 @@ type ShoppingCartProviderProps = {
   children: ReactNode;
 };
 
-type CartItem = {
+export type CartItem = {
   id: string;
   quantity: number;
 };
@@ -44,6 +44,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   function getItemQuantity(id: string) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
+
   function increaseCartQuantity(id: string) {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
@@ -59,6 +60,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       }
     });
   }
+
   function decreaseCartQuantity(id: string) {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id)?.quantity === 1) {

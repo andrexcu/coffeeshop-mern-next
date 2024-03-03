@@ -48,14 +48,14 @@ const MenuItem = ({ product }: MenuItemProps) => {
               Add To Cart
             </Button>
           ) : (
-            <div className="w-1/3 h-10  flex justify-between items-center">
+            <div className="w-1/3 h-10  flex justify-between items-center ">
               <Plus
-                className="h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
                 onClick={addCartItem}
               />
               <div className="w-full"></div>
               <Minus
-                className="h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
                 onClick={() => decreaseCartQuantity(product._id)}
               />
             </div>

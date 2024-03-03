@@ -23,22 +23,6 @@ import { toast } from "sonner";
 const Page = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const userData = await getCurrentUser();
-  //       // console.log(userData);
-  //       // if (!userData) console.log("no currently logged in user");
-  //       setUser(userData);
-  //       // console.log(user);
-  //     } catch (error) {
-  //       // setError(error.message);
-  //       console.log("no currently logged in user");
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [user]); // Empty dependency array ensures this effect runs once when the component mounts
 
   const [isLoading, setIsLoading] = useState(true);
   const {
