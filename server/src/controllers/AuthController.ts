@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
+import { userType } from "../types/userType";
 
 const loginUser = async (req: Request, res: Response) => {
   res.json(req.user);
@@ -30,7 +31,11 @@ const logoutUser = async (req: Request, res: Response) => {
   }
 };
 
+export interface UserWithId extends Omit<userType, "_id"> {
+  id: string;
+}
 const checkAuthStatus = async (req: Request, res: Response) => {
+  // console.log("user id: ", (req.user as UserWithId)?.id);
   return res.json(req.user);
 };
 
