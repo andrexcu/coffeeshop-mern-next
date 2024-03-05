@@ -49,24 +49,49 @@ const createCartItem = async (cartId: any, productId: any) => {
   }
 };
 
+const removeCartItem = async (cartId: any, productId: any) => {
+  //   const { cartId, productId } = req.body;
+  try {
+    const cart = await Cart.findOne({ _id: cartId });
+
+    if (!cart) {
+      throw new Error("Cart not found");
+    }
+
+    const existingCartItem = await CartItem.findOne({
+      cartId: cart?.id,
+      productId,
+    });
+    await CartItem.findOneAndDelete({ cartId: cart?.id, productId });
+    await Cart.updateOne(
+      { _id: cart._id },
+      { $pull: { cartItem: existingCartItem?._id } }
+    );
+  } catch (error) {
+    console.error("Error creating cart item:", error);
+    throw error;
+  }
+};
+
 const increaseQuantity = async (req: Request, res: Response) => {
-  //   const user = req.user as UserWithId;
-  const { cartId, productId } = req.body;
+  const user = req.user as UserWithId;
+  const { productId } = req.body;
 
   try {
-    // if (!user) {
-    //   return res.json("no user found!");
-    // }
-    // let cart = await Cart.findOne({ userId: user.id });
-
-    // let cartItem = cart?.cartItem.find(
-    //   (item: any) => item.productId === productId
-    // );
-
-    const existingCartItem = await CartItem.findOne({ cartId, productId });
+    if (!user) {
+      return res.json("no user found!");
+    }
+    const cart = await Cart.findOne({ userId: user.id });
+    if (!cart) {
+      return res.json("no cart found!");
+    }
+    const existingCartItem = await CartItem.findOne({
+      cartId: cart?.id,
+      productId,
+    });
     if (!existingCartItem) {
       // If cartItem doesn't exist, create a new one with initial quantity of 1
-      const newCartItem = await createCartItem(cartId, productId);
+      const newCartItem = await createCartItem(cart?.id, productId);
       return res.status(201).json(newCartItem);
     }
 
@@ -80,10 +105,59 @@ const increaseQuantity = async (req: Request, res: Response) => {
   }
 };
 
-const getItemQuantity = async (req: Request, res: Response) => {
-  const { cartId, productId } = req.body;
+const decreaseQuantity = async (req: Request, res: Response) => {
+  const user = req.user as UserWithId;
+  const { productId } = req.body;
+
   try {
-    const existingCartItem = await CartItem.findOne({ cartId, productId });
+    if (!user) {
+      return res.json("no user found!");
+    }
+    const cart = await Cart.findOne({ userId: user.id });
+
+    if (!cart) {
+      return res.json("no cart found!");
+    }
+
+    const existingCartItem = await CartItem.findOne({
+      cartId: cart?.id,
+      productId,
+    });
+
+    if (!existingCartItem) {
+      return res.json("cart item doesnt exist");
+    }
+
+    // Increment the quantity by 1
+    existingCartItem.quantity -= 1;
+    await existingCartItem.save();
+
+    if (existingCartItem.quantity <= 0) {
+      await removeCartItem(cart?.id, productId);
+    }
+    return res.status(200).json(existingCartItem);
+  } catch (error) {
+    console.error("Error handling cart item:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getItemQuantity = async (req: Request, res: Response) => {
+  const user = req.user as UserWithId;
+  const { productId } = req.body;
+
+  try {
+    if (!user) {
+      return res.json("no user found!");
+    }
+    const cart = await Cart.findOne({ userId: user.id });
+    if (!cart) {
+      return res.json("no cart found!");
+    }
+    const existingCartItem = await CartItem.findOne({
+      cartId: cart?.id,
+      productId,
+    });
     if (!existingCartItem) throw new Error("cart item doesnt exist");
 
     return res.json(existingCartItem.quantity);
@@ -93,4 +167,10 @@ const getItemQuantity = async (req: Request, res: Response) => {
   }
 };
 
-export { getCartItem, createCartItem, increaseQuantity, getItemQuantity };
+export {
+  getCartItem,
+  createCartItem,
+  increaseQuantity,
+  decreaseQuantity,
+  getItemQuantity,
+};

@@ -14,11 +14,13 @@ import getCurrentUser from "@/actions/get-current-user";
 import axios from "axios";
 import Hydration from "../ui/Hydration";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
+import getCartQuantity from "@/actions/get-cart-quantity";
 
 export default function index() {
   const { cartQuantity } = useShoppingCart();
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [quantity, setQuantity] = useState(0);
   const pathname = usePathname();
   // const button = useRef({});
   const button = useRef<HTMLDivElement | null>(null);
@@ -80,6 +82,17 @@ export default function index() {
     };
     getUserData();
   }, []);
+
+  useEffect(() => {
+    const fetchItemQuantity = async () => {
+      const itemQuantity = await getCartQuantity();
+      setQuantity(itemQuantity);
+    };
+
+    fetchItemQuantity();
+  }, []);
+
+  console.log(quantity);
 
   const logoutUser = async () => {
     try {
@@ -158,7 +171,7 @@ export default function index() {
                   className={`${styles.el} p-4 flex rounded-full bg-zinc-950 hover:bg-stone-900`}
                 >
                   <ShoppingCart className="h-6 w-6" />
-                  <span>{cartQuantity}</span>
+                  <span>{currentUser ? quantity : cartQuantity}</span>
                 </div>
               </Magnetic>
             </div>

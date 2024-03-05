@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import {
   createCartItem,
+  decreaseQuantity,
   getCartItem,
   getItemQuantity,
   increaseQuantity,
@@ -12,5 +13,6 @@ export const cartItemRouter = express.Router();
 // authRouter.post("/logout", logoutUser);
 cartItemRouter.get("/:id", getCartItem);
 cartItemRouter.post("/increaseQuantity", increaseQuantity);
+cartItemRouter.post("/decreaseQuantity", decreaseQuantity);
 cartItemRouter.post("/getItemQuantity", getItemQuantity);
 cartItemRouter.post("/", createCartItem);

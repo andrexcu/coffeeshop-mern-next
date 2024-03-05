@@ -47,4 +47,33 @@ const createCart = async (req: Request, res: Response) => {
   }
 };
 
-export { getCart, createCart };
+const getCartQuantity = async (req: Request, res: Response) => {
+  const user = req.user as UserWithId;
+
+  try {
+    if (!user) {
+      return res.json("no user found!");
+    }
+    const cart = await Cart.findOne({ userId: user.id })
+      .populate("cartItem")
+      .exec();
+
+    if (!cart || !cart.cartItem) {
+      return res.status(404).json({ error: "Cart Item not found" });
+    }
+
+    // Calculate the total quantity
+    const totalQuantity = cart.cartItem.reduce(
+      (total, item: any) => total + item.quantity,
+      0
+    );
+
+    // Return the total quantity
+    return res.status(200).json(totalQuantity);
+  } catch (error) {
+    console.error("Error fetching cart item", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export { getCart, createCart, getCartQuantity };
