@@ -80,4 +80,17 @@ const increaseQuantity = async (req: Request, res: Response) => {
   }
 };
 
-export { getCartItem, createCartItem, increaseQuantity };
+const getItemQuantity = async (req: Request, res: Response) => {
+  const { cartId, productId } = req.body;
+  try {
+    const existingCartItem = await CartItem.findOne({ cartId, productId });
+    if (!existingCartItem) throw new Error("cart item doesnt exist");
+
+    return res.json(existingCartItem.quantity);
+  } catch (error) {
+    console.error("Error handling cart item:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export { getCartItem, createCartItem, increaseQuantity, getItemQuantity };
