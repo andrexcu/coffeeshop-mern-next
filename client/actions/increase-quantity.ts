@@ -1,4 +1,5 @@
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/cartItem/increaseQuantity`;
 
@@ -9,6 +10,7 @@ const increaseQuantity = async (productId: string) => {
     { productId },
     { withCredentials: true }
   );
+
   return response.data;
 };
 

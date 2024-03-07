@@ -19,6 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
   };
+
   return (
     <div className="text-white w-full border-4 border-[#1a1814] overflow-hidden relative h-[282px] flex items-center justify-center group">
       <Image

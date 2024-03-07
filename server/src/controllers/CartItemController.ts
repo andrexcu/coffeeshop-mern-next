@@ -3,6 +3,7 @@ import CartItem from "../models/CartItem";
 import Cart from "../models/Cart";
 import { UserWithId } from "./AuthController";
 import { cartItemType } from "../types/cartItemType";
+import { createCart } from "./CartController";
 
 const getCartItem = async (req: Request, res: Response) => {
   try {
@@ -81,14 +82,22 @@ const increaseQuantity = async (req: Request, res: Response) => {
     if (!user) {
       return res.json("no user found!");
     }
-    const cart = await Cart.findOne({ userId: user.id });
+    let cart = await Cart.findOne({ userId: user.id });
+
+    let newCart;
+
     if (!cart) {
-      return res.json("no cart found!");
+      cart = await Cart.create({
+        userId: user.id,
+        cartItem: [], // Initialize with an empty array of cart items
+      });
     }
+
     const existingCartItem = await CartItem.findOne({
       cartId: cart?.id,
       productId,
     });
+
     if (!existingCartItem) {
       // If cartItem doesn't exist, create a new one with initial quantity of 1
       const newCartItem = await createCartItem(cart?.id, productId);

@@ -1,7 +1,17 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 // import { ShoppingCart } from "../components/ShoppingCart"
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { UserType } from "@/lib/types";
+import getCurrentUser from "@/actions/get-current-user";
+import increaseQuantity from "@/actions/increase-quantity";
+import { revalidatePath } from "next/cache";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -31,6 +41,17 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const userData = await getCurrentUser();
+      setCurrentUser(userData);
+    };
+
+    getUserData();
+  }, []);
+
   const [cartItems, setCartItems] = useLocalStorage<CartItem[]>(
     "shopping-cart",
     []
@@ -48,20 +69,24 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function increaseCartQuantity(id: string) {
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id) == null) {
-        return [...currItems, { id, quantity: 1 }];
-      } else {
-        return currItems.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
+  async function increaseCartQuantity(id: string) {
+    if (!currentUser) {
+      setCartItems((currItems) => {
+        if (currItems.find((item) => item.id === id) == null) {
+          return [...currItems, { id, quantity: 1 }];
+        } else {
+          return currItems.map((item) => {
+            if (item.id === id) {
+              return { ...item, quantity: item.quantity + 1 };
+            } else {
+              return item;
+            }
+          });
+        }
+      });
+    } else {
+      await increaseQuantity(id);
+    }
   }
 
   function decreaseCartQuantity(id: string) {

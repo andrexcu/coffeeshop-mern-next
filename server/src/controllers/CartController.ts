@@ -54,12 +54,13 @@ const getCartQuantity = async (req: Request, res: Response) => {
     if (!user) {
       return res.json("no user found!");
     }
+
     const cart = await Cart.findOne({ userId: user.id })
       .populate("cartItem")
       .exec();
 
     if (!cart || !cart.cartItem) {
-      return res.status(404).json({ error: "Cart Item not found" });
+      return res.json(0);
     }
 
     // Calculate the total quantity
@@ -68,6 +69,9 @@ const getCartQuantity = async (req: Request, res: Response) => {
       0
     );
 
+    if (!totalQuantity) {
+      return res.json("no order yet.");
+    }
     // Return the total quantity
     return res.status(200).json(totalQuantity);
   } catch (error) {

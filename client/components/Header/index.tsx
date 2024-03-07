@@ -33,6 +33,7 @@ export default function index() {
       behavior: "smooth",
     });
   };
+
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -73,13 +74,14 @@ export default function index() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [showBackground]);
 
   useEffect(() => {
     const getUserData = async () => {
       const userData = await getCurrentUser();
       setCurrentUser(userData);
     };
+
     getUserData();
   }, []);
 
@@ -91,8 +93,6 @@ export default function index() {
 
     fetchItemQuantity();
   }, []);
-
-  console.log(quantity);
 
   const logoutUser = async () => {
     try {
