@@ -8,6 +8,7 @@ import Hero from "@/components/Sections/Hero";
 import Info from "@/components/Sections/Info";
 import WhyUs from "@/components/Sections/WhyUs";
 import Hydration from "@/components/ui/Hydration";
+import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -33,6 +34,7 @@ export default function Home() {
   //   })();
   // }, []);
   return (
+    // <ShoppingCartProvider>
     <Hydration>
       <div className="main">
         {/* <AnimatePresence mode="wait">
@@ -70,5 +72,6 @@ export default function Home() {
         </section>
       </div>
     </Hydration>
+    // </ShoppingCartProvider>
   );
 }

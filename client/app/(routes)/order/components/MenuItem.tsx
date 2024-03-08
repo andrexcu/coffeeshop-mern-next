@@ -24,6 +24,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
   };
+
   return (
     <div className="grid-cols-12 menu">
       <div className="relative col-span-6 menu-item group">

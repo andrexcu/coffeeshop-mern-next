@@ -12,6 +12,9 @@ import { UserType } from "@/lib/types";
 import getCurrentUser from "@/actions/get-current-user";
 import increaseQuantity from "@/actions/increase-quantity";
 import { revalidatePath } from "next/cache";
+import decreaseQuantity from "@/actions/decrease-quantity";
+import getCartItemQuantity from "@/actions/get-item-quantity";
+import getCartQuantity from "@/actions/get-cart-quantity";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -29,7 +32,9 @@ type ShoppingCartContext = {
   increaseCartQuantity: (id: string) => void;
   decreaseCartQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
-  cartQuantity: number;
+  fetchItemQuantity: () => Promise<void>;
+  cartQuantity: number | undefined;
+  itemQuantity: number | undefined;
   cartItems: CartItem[];
 };
 
@@ -42,6 +47,9 @@ export function useShoppingCart() {
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const [itemQuantity, setItemQuantity] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const getUserData = async () => {
@@ -57,10 +65,13 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     []
   );
 
-  const cartQuantity = cartItems.reduce(
-    (quantity, item) => item.quantity + quantity,
-    0
-  );
+  let cartQuantity;
+  if (!currentUser) {
+    cartQuantity = cartItems.reduce(
+      (quantity, item) => item.quantity + quantity,
+      0
+    );
+  }
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -89,21 +100,45 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     }
   }
 
-  function decreaseCartQuantity(id: string) {
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id)?.quantity === 1) {
-        return currItems.filter((item) => item.id !== id);
-      } else {
-        return currItems.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity - 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
+  async function decreaseCartQuantity(id: string) {
+    if (!currentUser) {
+      setCartItems((currItems) => {
+        if (currItems.find((item) => item.id === id)?.quantity === 1) {
+          return currItems.filter((item) => item.id !== id);
+        } else {
+          return currItems.map((item) => {
+            if (item.id === id) {
+              return { ...item, quantity: item.quantity - 1 };
+            } else {
+              return item;
+            }
+          });
+        }
+      });
+    } else {
+      await decreaseQuantity(id);
+    }
   }
+
+  const fetchItemQuantity = async () => {
+    const currentCartQuantity = await getCartQuantity();
+    setItemQuantity(currentCartQuantity);
+    console.log("total cart quantity fetched");
+    console.log(itemQuantity);
+  };
+
+  useEffect(() => {
+    if (!currentUser) {
+      fetchItemQuantity();
+    } else {
+      const currentCartItems = cartItems.reduce(
+        (quantity, item) => item.quantity + quantity,
+        0
+      );
+      setItemQuantity(currentCartItems);
+    }
+  }, []);
+
   function removeFromCart(id: string) {
     setCartItems((currItems) => {
       return currItems.filter((item) => item.id !== id);
@@ -119,8 +154,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         removeFromCart,
         openCart,
         closeCart,
+        fetchItemQuantity,
         cartItems,
         cartQuantity,
+        itemQuantity,
       }}
     >
       {children}
