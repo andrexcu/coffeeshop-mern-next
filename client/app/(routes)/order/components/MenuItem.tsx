@@ -2,24 +2,44 @@
 import { ProductType } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./menuItem.css";
 import { Button } from "@/components/ui/button";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { Minus, Plus } from "lucide-react";
+import getCartItemQuantity from "@/actions/get-item-quantity";
+import Loader from "./Loader";
 
 interface MenuItemProps {
   product: ProductType;
 }
 
 const MenuItem = ({ product }: MenuItemProps) => {
-  const { getItemQuantity, decreaseCartQuantity, increaseCartQuantity } =
-    useShoppingCart();
+  const {
+    getItemQuantity,
+    decreaseCartQuantity,
+    increaseCartQuantity,
+    userProductQuantity,
+    fetchCurrentItemQuantity,
+    currentUser,
+    cartState,
+    isLoading,
+  } = useShoppingCart();
 
   const quantity = getItemQuantity(product._id);
 
-  // console.log();
+  // const fetchCurrentItemQuantity = async (id: string) => {
+  //   const currentItemQuantity = await getCartItemQuantity(id);
+  //   console.log(currentItemQuantity);
+  // };
 
+  useEffect(() => {
+    fetchCurrentItemQuantity(product._id);
+  }, [cartState]);
+
+  // const userProductQuantity = getItemQuantityFromServer(product._id);
+
+  // console.log(userProductQuantity);
   const addCartItem = (e: React.MouseEvent) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
@@ -44,22 +64,54 @@ const MenuItem = ({ product }: MenuItemProps) => {
         <div className="menu-description">{product.description}</div>
 
         <div className="border z-20 absolute w-full h-full top-0 opacity-0 group-hover:opacity-100 flex justify-center items-center transition duration-300 ease-in">
-          {quantity < 1 ? (
-            <Button variant="orange" className="" onClick={addCartItem}>
-              Add To Cart
-            </Button>
+          {/* {!currentUser ? (
+            quantity < 1 ? (
+              <Button variant="orange" className="" onClick={addCartItem}>
+                Add To Cart
+              </Button>
+            ) : (
+              <div className="w-1/3 h-10  flex justify-between items-center ">
+                <Plus
+                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  onClick={addCartItem}
+                />
+                <div className="w-full"></div>
+                <Minus
+                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  onClick={() => decreaseCartQuantity(product._id)}
+                />
+              </div>
+            )
           ) : (
-            <div className="w-1/3 h-10  flex justify-between items-center ">
-              <Plus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
-                onClick={addCartItem}
-              />
-              <div className="w-full"></div>
-              <Minus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
-                onClick={() => decreaseCartQuantity(product._id)}
-              />
-            </div>
+            ""
+          )} */}
+
+          {currentUser ? (
+            userProductQuantity[product._id] < 1 ? (
+              isLoading[product._id] ? (
+                <Loader />
+              ) : (
+                <Button variant="orange" className="" onClick={addCartItem}>
+                  Add To Cart
+                </Button>
+              )
+            ) : isLoading[product._id] ? (
+              <Loader />
+            ) : (
+              <div className="w-1/3 h-10  flex justify-between items-center ">
+                <Plus
+                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  onClick={addCartItem}
+                />
+                <div className="w-full"></div>
+                <Minus
+                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  onClick={() => decreaseCartQuantity(product._id)}
+                />
+              </div>
+            )
+          ) : (
+            ""
           )}
         </div>
       </div>

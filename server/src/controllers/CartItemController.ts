@@ -167,7 +167,8 @@ const getItemQuantity = async (req: Request, res: Response) => {
       cartId: cart?.id,
       productId,
     });
-    if (!existingCartItem) throw new Error("cart item doesnt exist");
+
+    if (!existingCartItem) return res.json(0);
 
     return res.json(existingCartItem.quantity);
   } catch (error) {
