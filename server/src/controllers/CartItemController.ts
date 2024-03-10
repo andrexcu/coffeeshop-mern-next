@@ -206,20 +206,16 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
 
     try {
       for (const localCartItem of localCartItems) {
-        if (
-          !localCartItem ||
-          !localCartItem.productId ||
-          !localCartItem.quantity
-        ) {
+        if (!localCartItem || !localCartItem.id || !localCartItem.quantity) {
           console.error("Invalid localCartItem:", localCartItem);
           continue; // Skip the current iteration if localCartItem is invalid
         }
 
-        // Use findOneAndUpdate to increment quantity or create a new item
+        // increment quantity or create a new item
         await CartItem.findOneAndUpdate(
           {
             cartId: userCart.id,
-            productId: localCartItem.productId,
+            productId: localCartItem.id,
           },
           {
             $inc: { quantity: localCartItem.quantity },

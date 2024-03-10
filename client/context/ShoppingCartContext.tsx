@@ -1,7 +1,9 @@
 "use client";
 import {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -15,6 +17,7 @@ import { revalidatePath } from "next/cache";
 import decreaseQuantity from "@/actions/decrease-quantity";
 import getCartItemQuantity from "@/actions/get-item-quantity";
 import getCartQuantity from "@/actions/get-cart-quantity";
+import mergeLocalCartToUser from "@/actions/merge-local-cart-to-user";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -37,6 +40,8 @@ type ShoppingCartContext = {
   cartQuantity: number | undefined;
   itemQuantity: number | undefined;
   cartItems: CartItem[];
+  // mergeCart: () => void;
+  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   fetchCurrentItemQuantity: (id: string) => void;
   currentUser: UserType | null;
   cartState: { [itemId: string]: boolean };
@@ -176,6 +181,17 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     });
   }
 
+  // async function mergeCart() {
+  //   await mergeLocalCartToUser(cartItems);
+  //   setCartItems([]);
+  // }
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     mergeCart();
+  //   }
+  // }, [currentUser]);
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -189,6 +205,8 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         closeCart,
         fetchItemQuantity,
         cartItems,
+        // mergeCart,
+        setCartItems,
         cartQuantity,
         itemQuantity,
         fetchCurrentItemQuantity,

@@ -1,10 +1,12 @@
 "use client";
 
 import getCurrentUser from "@/actions/get-current-user";
+import mergeLocalCartToUser from "@/actions/merge-local-cart-to-user";
 import LoginHydration from "@/components/ui/LoginHydration";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { cn } from "@/lib/utils";
 import {
   AuthCredentialsValidator,
@@ -24,6 +26,8 @@ const Page = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
+  const { cartItems, setCartItems } = useShoppingCart();
+
   const [isLoading, setIsLoading] = useState(true);
   const {
     register,
@@ -39,6 +43,7 @@ const Page = () => {
   }: TAuthCredentialsValidator) => {
     try {
       setIsLoading(true);
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
         {
@@ -52,16 +57,37 @@ const Page = () => {
 
       // console.log(response.data);
       const userData = await getCurrentUser();
-      setUser(userData);
-      // console.log("userdata:", userData);
+
+      await mergeLocalCartToUser(cartItems);
+      setCartItems([]);
 
       location.reload();
+      setUser(userData);
     } catch (error) {
       toast.error("Please check your credentials.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  // useEffect(() => {
+  // const mergeCart = async () => {
+  //   if (user) {
+  //     await new Promise((resolve) => setTimeout(resolve, 0));
+  //     await mergeLocalCartToUser(cartItems);
+  //     location.reload();
+  //   }
+  //   };
+
+  //   mergeCart();
+  //   setCartItems([]);
+  // }, [user]);
+
+  // if (!user) {
+  //   console.log("no user");
+  // } else {
+  //   mergeCart();
+  // }
 
   useEffect(() => {
     const checkUser = async () => {
@@ -78,10 +104,17 @@ const Page = () => {
     checkUser();
   }, []);
 
-  useEffect(() => {
-    if (user) router.push("/");
-    if (user) setIsLoading(false);
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     mergeCart();
+  //   }
+  // }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/");
+  //     setIsLoading(false);
+  //   }
+  // }, [user]);
 
   return (
     <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">
