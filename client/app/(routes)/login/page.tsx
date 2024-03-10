@@ -109,12 +109,12 @@ const Page = () => {
   //     mergeCart();
   //   }
   // }, [user]);
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/");
-  //     setIsLoading(false);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+      setIsLoading(false);
+    }
+  }, [user]);
 
   return (
     <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">

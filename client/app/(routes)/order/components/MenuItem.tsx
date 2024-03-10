@@ -55,7 +55,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
           height={50}
           style={{ width: "68px", height: "65px" }}
           alt="product image"
-          className="rounded-full float-left border-5 border-solid border-white border-opacity-20"
+          className="select-none rounded-full float-left border-5 border-solid border-white border-opacity-20"
         />
         <div className="menu-content">
           <a className="z-0">{product.name}</a>
@@ -63,7 +63,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
         </div>
         <div className="menu-description">{product.description}</div>
 
-        <div className="border z-20 absolute w-full h-full top-0 opacity-0 group-hover:opacity-100 flex justify-center items-center transition duration-300 ease-in">
+        <div className="z-20 absolute w-full h-full top-0 opacity-0 group-hover:opacity-100 flex justify-center items-center transition duration-300 ease-in">
           {!currentUser ? (
             quantity < 1 ? (
               <Button variant="orange" className="" onClick={addCartItem}>

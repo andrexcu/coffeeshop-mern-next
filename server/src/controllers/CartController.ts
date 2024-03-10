@@ -70,7 +70,7 @@ const getCartQuantity = async (req: Request, res: Response) => {
     );
 
     if (!totalQuantity) {
-      return res.json("no order yet.");
+      return res.json(0);
     }
     // Return the total quantity
     return res.status(200).json(totalQuantity);

@@ -17,7 +17,6 @@ import { revalidatePath } from "next/cache";
 import decreaseQuantity from "@/actions/decrease-quantity";
 import getCartItemQuantity from "@/actions/get-item-quantity";
 import getCartQuantity from "@/actions/get-cart-quantity";
-import mergeLocalCartToUser from "@/actions/merge-local-cart-to-user";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;

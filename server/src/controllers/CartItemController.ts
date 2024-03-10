@@ -187,10 +187,13 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "No user found!" });
     }
 
-    const userCart = await Cart.findOne({ userId: user.id });
+    let userCart = await Cart.findOne({ userId: user.id });
 
     if (!userCart) {
-      return res.status(400).json({ error: "No user cart found!" });
+      userCart = await Cart.create({
+        userId: user.id,
+        cartItem: [], // Initialize with an empty array of cart items
+      });
     }
 
     // Ensure localCartItems is an array
@@ -212,7 +215,7 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
         }
 
         // increment quantity or create a new item
-        await CartItem.findOneAndUpdate(
+        const updatedCartItem = await CartItem.findOneAndUpdate(
           {
             cartId: userCart.id,
             productId: localCartItem.id,
@@ -224,7 +227,20 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
         );
 
         console.log("Item updated or created successfully");
+
+        const updatedItemId = updatedCartItem._id; // Assuming updatedCartItem._id is already an ObjectId
+
+        const cartItemExists = userCart.cartItem.some((c) => {
+          console.log("Comparison:", c.equals(updatedItemId));
+          return c.equals(updatedItemId);
+        });
+
+        if (!cartItemExists) {
+          userCart.cartItem.push(updatedCartItem._id);
+        }
       }
+
+      await userCart.save();
 
       await session.commitTransaction();
       session.endSession();
