@@ -5,6 +5,7 @@ import {
   getCartItem,
   getItemQuantity,
   increaseQuantity,
+  mergeLocalCartToUser,
 } from "../controllers/CartItemController";
 
 export const cartItemRouter = express.Router();
@@ -15,4 +16,5 @@ cartItemRouter.get("/:id", getCartItem);
 cartItemRouter.post("/increaseQuantity", increaseQuantity);
 cartItemRouter.post("/decreaseQuantity", decreaseQuantity);
 cartItemRouter.post("/getItemQuantity", getItemQuantity);
+cartItemRouter.post("/mergeLocalCartToUser", mergeLocalCartToUser);
 cartItemRouter.post("/", createCartItem);

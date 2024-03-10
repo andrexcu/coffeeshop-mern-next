@@ -4,6 +4,7 @@ import Cart from "../models/Cart";
 import { UserWithId } from "./AuthController";
 import { cartItemType } from "../types/cartItemType";
 import { createCart } from "./CartController";
+import mongoose from "mongoose";
 
 const getCartItem = async (req: Request, res: Response) => {
   try {
@@ -177,10 +178,79 @@ const getItemQuantity = async (req: Request, res: Response) => {
   }
 };
 
+const mergeLocalCartToUser = async (req: Request, res: Response) => {
+  const user = req.user as UserWithId;
+  const localCartItems = req.body;
+
+  try {
+    if (!user) {
+      return res.status(400).json({ error: "No user found!" });
+    }
+
+    const userCart = await Cart.findOne({ userId: user.id });
+
+    if (!userCart) {
+      return res.status(400).json({ error: "No user cart found!" });
+    }
+
+    // Ensure localCartItems is an array
+    if (!Array.isArray(localCartItems)) {
+      return res.status(400).json({
+        error: "Invalid request format. Expected an array of cart items.",
+      });
+    }
+
+    // Use a transaction for atomicity
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      for (const localCartItem of localCartItems) {
+        if (
+          !localCartItem ||
+          !localCartItem.productId ||
+          !localCartItem.quantity
+        ) {
+          console.error("Invalid localCartItem:", localCartItem);
+          continue; // Skip the current iteration if localCartItem is invalid
+        }
+
+        // Use findOneAndUpdate to increment quantity or create a new item
+        await CartItem.findOneAndUpdate(
+          {
+            cartId: userCart.id,
+            productId: localCartItem.productId,
+          },
+          {
+            $inc: { quantity: localCartItem.quantity },
+          },
+          { upsert: true, new: true }
+        );
+
+        console.log("Item updated or created successfully");
+      }
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return res.json("Local cart merged with user cart successfully!");
+    } catch (error) {
+      console.error("Error merging carts:", error);
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  } catch (error) {
+    console.error("Error finding user cart:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export {
   getCartItem,
   createCartItem,
   increaseQuantity,
   decreaseQuantity,
   getItemQuantity,
+  mergeLocalCartToUser,
 };

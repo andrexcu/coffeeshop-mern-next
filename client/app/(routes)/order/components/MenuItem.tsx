@@ -64,7 +64,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
         <div className="menu-description">{product.description}</div>
 
         <div className="border z-20 absolute w-full h-full top-0 opacity-0 group-hover:opacity-100 flex justify-center items-center transition duration-300 ease-in">
-          {/* {!currentUser ? (
+          {!currentUser ? (
             quantity < 1 ? (
               <Button variant="orange" className="" onClick={addCartItem}>
                 Add To Cart
@@ -84,7 +84,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
             )
           ) : (
             ""
-          )} */}
+          )}
 
           {currentUser ? (
             userProductQuantity[product._id] < 1 ? (
