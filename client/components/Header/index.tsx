@@ -85,15 +85,6 @@ export default function index() {
     getUserData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchItemQuantity = async () => {
-  //     const itemQuantity = await getCartQuantity();
-  //     setQuantity(itemQuantity);
-  //   };
-
-  //   fetchItemQuantity();
-  // }, []);
-
   const logoutUser = async () => {
     try {
       const response = await fetch(
@@ -167,12 +158,13 @@ export default function index() {
                 </div>
               </Magnetic>
               <Magnetic>
-                <div
+                <Link
+                  href="/cart"
                   className={`${styles.el} p-4 flex rounded-full bg-zinc-950 hover:bg-stone-900`}
                 >
                   <ShoppingCart className="h-6 w-6" />
                   <span>{currentUser ? itemQuantity : cartQuantity}</span>
-                </div>
+                </Link>
               </Magnetic>
             </div>
 
