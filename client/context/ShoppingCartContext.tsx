@@ -204,7 +204,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         closeCart,
         fetchItemQuantity,
         cartItems,
-        // mergeCart,
         setCartItems,
         cartQuantity,
         itemQuantity,

@@ -12,7 +12,7 @@ export const cartItemRouter = express.Router();
 
 // authRouter.post("/login", passport.authenticate("local"), loginUser);
 // authRouter.post("/logout", logoutUser);
-cartItemRouter.get("/:id", getCartItem);
+cartItemRouter.get("/", getCartItem);
 cartItemRouter.post("/increaseQuantity", increaseQuantity);
 cartItemRouter.post("/decreaseQuantity", decreaseQuantity);
 cartItemRouter.post("/getItemQuantity", getItemQuantity);
