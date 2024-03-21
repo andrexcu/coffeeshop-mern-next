@@ -28,18 +28,29 @@ const MenuItem = ({ product }: MenuItemProps) => {
 
   const quantity = getItemQuantity(product._id);
 
-  // const fetchCurrentItemQuantity = async (id: string) => {
-  //   const currentItemQuantity = await getCartItemQuantity(id);
-  //   console.log(currentItemQuantity);
-  // };
+  const [addPressed, setAddPressed] = useState(false);
+  const [removePressed, setRemovePressed] = useState(false);
+
+  const handleAddPress = () => {
+    setAddPressed(true);
+  };
+
+  const handleAddRelease = () => {
+    setAddPressed(false);
+  };
+
+  const handleRemovePress = () => {
+    setRemovePressed(true);
+  };
+
+  const handleRemoveRelease = () => {
+    setRemovePressed(false);
+  };
 
   useEffect(() => {
     fetchCurrentItemQuantity(product._id);
   }, [cartState]);
 
-  // const userProductQuantity = getItemQuantityFromServer(product._id);
-
-  // console.log(userProductQuantity);
   const addCartItem = (e: React.MouseEvent) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
@@ -72,13 +83,25 @@ const MenuItem = ({ product }: MenuItemProps) => {
             ) : (
               <div className="w-1/3 h-10  flex justify-between items-center ">
                 <Plus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={addCartItem}
+                  onMouseDown={handleAddPress}
+                  onMouseUp={handleAddRelease}
+                  onMouseLeave={handleAddRelease}
                 />
-                <div className="w-full"></div>
+                <div className="h-full w-full bg-black text-slate-300 flex justify-center items-center text-2xl ">
+                  <span>{quantity}</span>
+                </div>
                 <Minus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    removePressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={() => decreaseCartQuantity(product._id)}
+                  onMouseDown={handleRemovePress}
+                  onMouseUp={handleRemoveRelease}
+                  onMouseLeave={handleRemoveRelease}
                 />
               </div>
             )
@@ -100,13 +123,25 @@ const MenuItem = ({ product }: MenuItemProps) => {
             ) : (
               <div className="w-1/3 h-10  flex justify-between items-center ">
                 <Plus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={addCartItem}
+                  onMouseDown={handleAddPress}
+                  onMouseUp={handleAddRelease}
+                  onMouseLeave={handleAddRelease}
                 />
-                <div className="w-full"></div>
+                <div className="h-full w-full bg-black text-slate-300 flex justify-center items-center text-2xl ">
+                  <span>{userProductQuantity[product._id]}</span>
+                </div>
                 <Minus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    removePressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={() => decreaseCartQuantity(product._id)}
+                  onMouseDown={handleRemovePress}
+                  onMouseUp={handleRemoveRelease}
+                  onMouseLeave={handleRemoveRelease}
                 />
               </div>
             )

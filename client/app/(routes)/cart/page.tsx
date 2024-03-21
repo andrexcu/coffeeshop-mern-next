@@ -8,6 +8,7 @@ import { ProductType } from "@/lib/types";
 const page = () => {
   const { cartItems } = useShoppingCart();
   const [products, setProducts] = useState<ProductType[] | null>(null);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -33,6 +34,23 @@ const page = () => {
 
   const productsInCart = getProductsInCart();
 
+  const totalPrice = productsInCart.reduce((total, product) => {
+    const cartItem = cartItems.find((item) => item.id === product._id);
+    if (cartItem) {
+      return total + cartItem.quantity * product.price;
+    }
+    return total;
+  }, 0);
+
+  useEffect(() => {
+    const calculateTotalItems = () => {
+      const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+      setTotalItems(total);
+    };
+
+    calculateTotalItems();
+  }, [cartItems]);
+
   return (
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
@@ -45,7 +63,7 @@ const page = () => {
                 <th className="text-start p-4">Product</th>
                 <th className="text-start">Quantity</th>
                 <th className="text-start ">Price</th>
-                <th className="text-start ">Action</th>
+                <th className="text-start "></th>
               </tr>
             </thead>
             <tbody className="">
@@ -53,6 +71,22 @@ const page = () => {
                 <CartItem key={product._id} product={product} />
               ))}
             </tbody>
+            <tfoot className="">
+              <tr>
+                <td
+                  className="text-end p-4  col-span-4 bg-zinc-950"
+                  colSpan={3}
+                ></td>
+                <td className="bg-[#cda45e] p-2">
+                  <div className="flex items-center justify-between">
+                    <p>Items: </p> <p>{totalItems}</p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p>Order Total:</p> <p>${totalPrice}</p>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

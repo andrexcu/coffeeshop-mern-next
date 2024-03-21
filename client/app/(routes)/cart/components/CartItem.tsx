@@ -3,7 +3,7 @@
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { ProductType } from "@/lib/types";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../order/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
@@ -25,19 +25,29 @@ const CartItem = ({ product }: CartItemProps) => {
   } = useShoppingCart();
 
   const quantity = getItemQuantity(product._id);
+  const [addPressed, setAddPressed] = useState(false);
+  const [removePressed, setRemovePressed] = useState(false);
 
-  // const fetchCurrentItemQuantity = async (id: string) => {
-  //   const currentItemQuantity = await getCartItemQuantity(id);
-  //   console.log(currentItemQuantity);
-  // };
+  const handleAddPress = () => {
+    setAddPressed(true);
+  };
+
+  const handleAddRelease = () => {
+    setAddPressed(false);
+  };
+
+  const handleRemovePress = () => {
+    setRemovePressed(true);
+  };
+
+  const handleRemoveRelease = () => {
+    setRemovePressed(false);
+  };
 
   useEffect(() => {
     fetchCurrentItemQuantity(product._id);
   }, [cartState]);
 
-  // const userProductQuantity = getItemQuantityFromServer(product._id);
-
-  // console.log(userProductQuantity);
   const addCartItem = (e: React.MouseEvent) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
@@ -71,7 +81,14 @@ const CartItem = ({ product }: CartItemProps) => {
           {!currentUser ? currentQuantity : quantity}x
         </div>
       </td>
-      <td>${product.price}</td>
+      <td>
+        $
+        {!currentUser
+          ? currentQuantity
+            ? currentQuantity * product.price
+            : 0
+          : quantity * product.price}
+      </td>
       <td className="">
         <div className="flex gap-x-4">
           {!currentUser ? (
@@ -80,14 +97,27 @@ const CartItem = ({ product }: CartItemProps) => {
                 Add To Cart
               </Button>
             ) : (
-              <div className="h-10 gap-x-4 flex justify-between items-center ">
+              <div className="h-10 w-2/5 flex justify-between items-center ">
                 <Plus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={addCartItem}
+                  onMouseDown={handleAddPress}
+                  onMouseUp={handleAddRelease}
+                  onMouseLeave={handleAddRelease}
                 />
+                <div className="h-full w-full bg-black text-slate-300 flex justify-center items-center text-2xl ">
+                  <span>{quantity}</span>
+                </div>
                 <Minus
-                  className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                  className={`h-full w-full ${
+                    removePressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                  } transition-colors duration-300 ease-in`}
                   onClick={() => decreaseCartQuantity(product._id)}
+                  onMouseDown={handleRemovePress}
+                  onMouseUp={handleRemoveRelease}
+                  onMouseLeave={handleRemoveRelease}
                 />
               </div>
             )

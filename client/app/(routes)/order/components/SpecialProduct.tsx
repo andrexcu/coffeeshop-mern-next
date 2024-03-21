@@ -1,5 +1,5 @@
 import { ProductType } from "@/lib/types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./SpecialProduct.css";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -34,8 +34,27 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
     e.preventDefault();
     increaseCartQuantity(product._id);
   };
+  const [addPressed, setAddPressed] = useState(false);
+  const [removePressed, setRemovePressed] = useState(false);
+
+  const handleAddPress = () => {
+    setAddPressed(true);
+  };
+
+  const handleAddRelease = () => {
+    setAddPressed(false);
+  };
+
+  const handleRemovePress = () => {
+    setRemovePressed(true);
+  };
+
+  const handleRemoveRelease = () => {
+    setRemovePressed(false);
+  };
 
   if (!isActive) return null;
+
   return (
     <div
       className={`overflow-hiddden flex flex-col-reverse items-center lg:items-start lg:flex-row w-full gap-y-8`}
@@ -54,15 +73,27 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
               Add To Cart
             </Button>
           ) : (
-            <div className="w-full lg:w-1/5 gap-x-8 h-10  flex justify-between items-center ">
+            <div className="w-2/5 lg:w-1/5 h-10 flex justify-between items-center">
               <Plus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                className={`h-full w-full ${
+                  addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                } transition-colors duration-300 ease-in`}
                 onClick={addCartItem}
+                onMouseDown={handleAddPress}
+                onMouseUp={handleAddRelease}
+                onMouseLeave={handleAddRelease}
               />
-              {/* <div className="w-full"></div> */}
+              <div className="h-full w-full bg-black text-slate-300 flex justify-center items-center text-2xl ">
+                <span>{quantity}</span>
+              </div>
               <Minus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                className={`h-full w-full ${
+                  removePressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                } transition-colors duration-300 ease-in`}
                 onClick={() => decreaseCartQuantity(product._id)}
+                onMouseDown={handleRemovePress}
+                onMouseUp={handleRemoveRelease}
+                onMouseLeave={handleRemoveRelease}
               />
             </div>
           )
@@ -73,9 +104,7 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
         {currentUser ? (
           userProductQuantity[product._id] < 1 ? (
             isLoading[product._id] ? (
-              <div className="w-1/5">
-                <Loader />
-              </div>
+              <Loader />
             ) : (
               <Button
                 variant="orange"
@@ -86,19 +115,31 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
               </Button>
             )
           ) : isLoading[product._id] ? (
-            <div className="w-1/5">
+            <div className="w-2/5 lg:w-1/5">
               <Loader />
             </div>
           ) : (
-            <div className="w-full lg:w-1/5 gap-x-8 h-10  flex justify-between items-center ">
+            <div className="w-2/5 lg:w-1/5 h-10 flex justify-between items-center">
               <Plus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
-                onClick={addCartItem}
+                className={`h-full w-full ${
+                  addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                } transition-colors duration-300 ease-in`}
+                onClick={() => increaseCartQuantity(product._id)}
+                onMouseDown={handleAddPress}
+                onMouseUp={handleAddRelease}
+                onMouseLeave={handleAddRelease}
               />
-              {/* <div className="w-full"></div> */}
+              <div className="h-full w-full bg-black text-slate-300 flex justify-center items-center text-2xl ">
+                <span>{userProductQuantity[product._id]}</span>
+              </div>
               <Minus
-                className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
+                className={`h-full w-full ${
+                  removePressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
+                } transition-colors duration-300 ease-in`}
                 onClick={() => decreaseCartQuantity(product._id)}
+                onMouseDown={handleRemovePress}
+                onMouseUp={handleRemoveRelease}
+                onMouseLeave={handleRemoveRelease}
               />
             </div>
           )
