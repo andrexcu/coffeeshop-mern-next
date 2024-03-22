@@ -12,11 +12,15 @@ type CartItemType = {
 };
 
 const page = () => {
-  const { cartItems } = useShoppingCart();
+  const { cartItems, currentUser } = useShoppingCart();
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
     null
   );
+  const [userProducts, setUserProducts] = useState<ProductType[] | undefined>(
+    undefined
+  );
+
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
@@ -36,10 +40,15 @@ const page = () => {
     fetchUserCartItems();
   }, []);
 
-  const userProducts = products?.filter((product) =>
-    userCartItems?.some((cartItem) => cartItem.productId === product._id)
-  );
-  console.log(userProducts);
+  useEffect(() => {
+    // Filter products based on userCartItems
+    if (userCartItems && userCartItems.length > 0) {
+      const fetchedUserProducts = products?.filter((product) =>
+        userCartItems?.some((cartItem) => cartItem.productId === product._id)
+      );
+      setUserProducts(fetchedUserProducts);
+    }
+  }, [userCartItems, products]);
 
   const getProductsInCart = () => {
     if (!products || !cartItems) {
@@ -86,9 +95,19 @@ const page = () => {
               </tr>
             </thead>
             <tbody className="">
-              {productsInCart.map((product) => (
-                <CartItem key={product._id} product={product} />
-              ))}
+              {!currentUser ? (
+                <>
+                  {productsInCart.map((product) => (
+                    <CartItem key={product._id} product={product} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  {userProducts?.map((product) => (
+                    <CartItem key={product._id} product={product} />
+                  ))}
+                </>
+              )}
             </tbody>
             <tfoot className="">
               <tr>

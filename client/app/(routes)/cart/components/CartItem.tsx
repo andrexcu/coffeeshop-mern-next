@@ -25,6 +25,7 @@ const CartItem = ({ product }: CartItemProps) => {
   } = useShoppingCart();
 
   const quantity = getItemQuantity(product._id);
+
   const [addPressed, setAddPressed] = useState(false);
   const [removePressed, setRemovePressed] = useState(false);
 
@@ -56,6 +57,7 @@ const CartItem = ({ product }: CartItemProps) => {
   const currentQuantity = cartItems.find(
     (item) => item.id === product._id
   )?.quantity;
+
   return (
     <tr key={product._id} className="bg-[#1a1814]">
       <td className="">
@@ -78,7 +80,7 @@ const CartItem = ({ product }: CartItemProps) => {
       </td>
       <td className="">
         <div className="text-slate-300">
-          {!currentUser ? currentQuantity : quantity}x
+          {!currentUser ? currentQuantity : userProductQuantity[product._id]}x
         </div>
       </td>
       <td>
@@ -87,7 +89,7 @@ const CartItem = ({ product }: CartItemProps) => {
           ? currentQuantity
             ? currentQuantity * product.price
             : 0
-          : quantity * product.price}
+          : userProductQuantity[product._id] * product.price}
       </td>
       <td className="">
         <div className="flex gap-x-4">
