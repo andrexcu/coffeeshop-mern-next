@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Cart from "../models/Cart";
 import { UserWithId } from "./AuthController";
+import CartItem from "../models/CartItem";
 
 const getCart = async (req: Request, res: Response) => {
   try {
@@ -80,4 +81,31 @@ const getCartQuantity = async (req: Request, res: Response) => {
   }
 };
 
-export { getCart, createCart, getCartQuantity };
+const getCartItems = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as UserWithId;
+
+    if (!user) {
+      return res.json({ msg: "no logged in user" });
+    }
+
+    // console.log(user.id);
+
+    // const cart = await Cart.find().lean();
+
+    const cart = await Cart.findOne({ userId: user.id });
+
+    if (!cart) {
+      return res.status(404).json({ error: "No cart found" });
+    }
+
+    const cartItems = await CartItem.find({ _id: { $in: cart.cartItem } });
+
+    return res.status(200).json(cartItems);
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export { getCart, createCart, getCartQuantity, getCartItems };

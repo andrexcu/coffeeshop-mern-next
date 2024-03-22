@@ -4,10 +4,19 @@ import CartItem from "./components/CartItem";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import getAllProducts from "@/actions/get-all-products";
 import { ProductType } from "@/lib/types";
+import getCartItems from "@/actions/get-cart-items";
+
+type CartItemType = {
+  productId: string;
+  quantity: number;
+};
 
 const page = () => {
   const { cartItems } = useShoppingCart();
   const [products, setProducts] = useState<ProductType[] | null>(null);
+  const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
+    null
+  );
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
@@ -18,7 +27,19 @@ const page = () => {
     fetchAllProducts();
   }, []);
 
-  //   const items = products?.find((product) => product._id === cartItems.map(cart => cart.id));
+  useEffect(() => {
+    const fetchUserCartItems = async () => {
+      const userCartItems = await getCartItems();
+      setUserCartItems(userCartItems);
+    };
+
+    fetchUserCartItems();
+  }, []);
+
+  const userProducts = products?.filter((product) =>
+    userCartItems?.some((cartItem) => cartItem.productId === product._id)
+  );
+  console.log(userProducts);
 
   const getProductsInCart = () => {
     if (!products || !cartItems) {
@@ -55,10 +76,8 @@ const page = () => {
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
         <div className="flex flex-col gap-2 w-full  text-white">
-          {/* <CartItem product={prod}  /> */}
-
           <table className="w-full my-8 ">
-            <thead className=" bg-[#cda45e]">
+            <thead className="bg-[#cda45e]">
               <tr className="">
                 <th className="text-start p-4">Product</th>
                 <th className="text-start">Quantity</th>
