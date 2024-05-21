@@ -83,7 +83,7 @@ const CartItem = ({ product }: CartItemProps) => {
           {!currentUser ? currentQuantity : userProductQuantity[product._id]}x
         </div>
       </td>
-      <td>
+      <td className="">
         $
         {!currentUser
           ? currentQuantity

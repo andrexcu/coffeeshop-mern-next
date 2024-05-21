@@ -85,13 +85,13 @@ const page = () => {
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
         <div className="flex flex-col gap-2 w-full  text-white">
-          <table className="w-full my-8 ">
+          <table className="w-full my-8 table-fixed">
             <thead className="bg-[#cda45e]">
               <tr className="">
-                <th className="text-start p-4">Product</th>
-                <th className="text-start">Quantity</th>
-                <th className="text-start ">Price</th>
-                <th className="text-start "></th>
+                <th className="text-start p-4 w-1/2">Product</th>
+                <th className="text-start w-1/6">Quantity</th>
+                <th className="text-start w-1/6">Price</th>
+                <th className="text-start w-1/4"></th>
               </tr>
             </thead>
             <tbody className="">
