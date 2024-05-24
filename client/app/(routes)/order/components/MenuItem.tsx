@@ -3,7 +3,7 @@ import { ProductType } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import "./menuItem.css";
+import "./MenuItem.css";
 import { Button } from "@/components/ui/button";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { Minus, Plus } from "lucide-react";

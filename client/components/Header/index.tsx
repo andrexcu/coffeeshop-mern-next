@@ -2,7 +2,7 @@
 import { lobsterTwo } from "@/app/fonts";
 import Magnetic from "@/components/Common/Magnetic";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./style.module.scss";
 import { ChevronUp, Menu, ShoppingCart } from "lucide-react";
 import Rounded from "@/components/Common/RoundedButton";
@@ -15,6 +15,31 @@ import axios from "axios";
 import Hydration from "../ui/Hydration";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import getCartQuantity from "@/actions/get-cart-quantity";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+
+const components: { title: string; href: string }[] = [
+  {
+    title: "Login",
+    href: "/login",
+  },
+  {
+    title: "Order",
+    href: "/order",
+  },
+  {
+    title: "Cart",
+    href: "/cart",
+  },
+];
 
 export default function index() {
   const { cartQuantity, itemQuantity } = useShoppingCart();
@@ -170,12 +195,28 @@ export default function index() {
 
             <div className="flex sm:hidden">
               <div className={`${styles.nav}`}>
-                <Magnetic>
-                  <div className={`${styles.el}`}>
-                    <Menu className="h-8 w-8" />
-                    <div></div>
-                  </div>
-                </Magnetic>
+                <div className={`${styles.el}`}>
+                  <NavigationMenu>
+                    <NavigationMenuList>
+                      <NavigationMenuItem>
+                        <NavigationMenuTrigger className="bg-transparent">
+                          Menu
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="flex flex-col w-[85px]">
+                            {components.map((component) => (
+                              <ListItem
+                                key={component.title}
+                                title={component.title}
+                                href={component.href}
+                              ></ListItem>
+                            ))}
+                          </ul>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
+                  </NavigationMenu>
+                </div>
               </div>
             </div>
           </div>
@@ -192,3 +233,29 @@ export default function index() {
     </Hydration>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
