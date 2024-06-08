@@ -3,15 +3,22 @@ import session from "express-session";
 import cors from "cors";
 import mongoose from "mongoose";
 import passport from "passport";
-import routes from "./routes/index"
+import routes from "./routes/index";
 import "./strategies/local-strategy";
 
 require("dotenv").config();
 
 const app = express();
 
+// const corsOptions = {
+//   origin: "*",
+//   credentials: true,
+// };
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: (origin: any, callback: any) => {
+    // Allow all origins
+    callback(null, true);
+  },
   credentials: true,
 };
 
