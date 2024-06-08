@@ -1,13 +1,9 @@
-// import mongoose from "mongoose";
-// import app from "./app";
-
-
 import express, { Request, Response, response } from "express";
 import session from "express-session";
 import cors from "cors";
 import mongoose from "mongoose";
 import passport from "passport";
-import routes from "./routes/index";
+import routes from "./routes/index"
 import "./strategies/local-strategy";
 
 require("dotenv").config();
@@ -34,10 +30,4 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(routes);
-// export default app;
-const PORT = process.env.PORT || 5000;
-
-mongoose.connect(process.env.DATABASE_URL!).then(() => {
-  console.log(`listening on port ${PORT}`);
-  app.listen(PORT);
-});
+export default app;
