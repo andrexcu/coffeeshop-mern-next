@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 
-import { text, curve, translate } from "@/app/components/transitions/anim";
+import { text, curve, translate } from "@/components/transitions/anim";
 import { useRouter } from "next/navigation";
 
 type Routes = {
