@@ -28,7 +28,7 @@ const LoginHydration = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (user) router.push("/");
-  }, [user]);
+  }, [user, router]);
 
   if (isLoading) return null;
 

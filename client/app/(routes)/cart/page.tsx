@@ -128,7 +128,9 @@ const Page = () => {
               </tfoot>
             </table>
           ) : (
-            <div className="flex justify-center items-center text-xl">You don't have any coffee ordered yet.</div>
+            <div className="flex justify-center items-center text-xl">
+              You don&apos;t have any coffee ordered yet.
+            </div>
           )}
         </div>
       </div>

@@ -47,7 +47,7 @@ const About = () => {
               </p>
             </div>
             <p>
-              At Premium, we're not just a café; we're a haven for coffee
+              At Premium, we&apos;re not just a café; we&apos;re a haven for coffee
               enthusiast, a place where each cup is a celebration of quality,
               community, and the love for the perfect brew. Join us in savoring
               life, one exquisite sip at a time.
