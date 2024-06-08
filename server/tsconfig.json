@@ -16,8 +16,6 @@
 
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["./src/*.ts"], // Include all TypeScript files directly under 'server/src'
-  "exclude": ["node_modules", "dist"]
 }
 
 // {
