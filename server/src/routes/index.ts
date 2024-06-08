@@ -13,4 +13,11 @@ router.use("/api/auth", authRouter);
 router.use("/api/cart", cartRouter);
 router.use("/api/cartItem", cartItemRouter);
 
+router.get("/", (req, res) => {
+  res.send("coffee shopmern api");
+}); 
+router.get("/api", (req, res) => {
+  res.send("coffee shopmern api");
+}); 
+
 export default router;
