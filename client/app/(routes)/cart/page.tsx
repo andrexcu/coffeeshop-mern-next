@@ -11,7 +11,7 @@ type CartItemType = {
   quantity: number;
 };
 
-const page = () => {
+const Page = () => {
   const { cartItems, currentUser } = useShoppingCart();
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
@@ -136,4 +136,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

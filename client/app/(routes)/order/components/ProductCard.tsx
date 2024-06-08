@@ -23,7 +23,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const quantity = getItemQuantity(product._id);
   useEffect(() => {
     fetchCurrentItemQuantity(product._id);
-  }, [cartState]);
+  }, [cartState, fetchCurrentItemQuantity, product._id]);
   // console.log();
 
   const addCartItem = (e: React.MouseEvent) => {

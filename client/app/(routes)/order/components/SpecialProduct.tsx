@@ -28,7 +28,7 @@ const SpecialProduct = ({ product, isActive }: SpecialProductType) => {
 
   useEffect(() => {
     fetchCurrentItemQuantity(product._id);
-  }, [cartState]);
+  }, [cartState, fetchCurrentItemQuantity, product._id]);
 
   const addCartItem = (e: React.MouseEvent) => {
     e.preventDefault();

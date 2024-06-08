@@ -41,7 +41,7 @@ const components: { title: string; href: string }[] = [
   },
 ];
 
-export default function index() {
+export default function Index() {
   const { cartQuantity, itemQuantity } = useShoppingCart();
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);

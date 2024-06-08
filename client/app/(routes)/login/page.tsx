@@ -114,7 +114,7 @@ const Page = () => {
       router.push("/");
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">

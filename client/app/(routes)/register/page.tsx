@@ -76,7 +76,7 @@ const Page = () => {
   useEffect(() => {
     if (user) router.push("/");
     if (user) setIsLoading(false);
-  }, [user]);
+  }, [user, router]);
 
   return (
     <>
