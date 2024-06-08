@@ -7,7 +7,6 @@ import {
   Josefin_Sans,
   Blinker,
   Lobster_Two,
-  Playfair,
   Poppins,
 } from "next/font/google";
 
@@ -26,7 +25,5 @@ export const josefinSans = Josefin_Sans({ subsets: ["latin"], weight: "200" });
 export const blinker = Blinker({ subsets: ["latin"], weight: "400" });
 
 export const lobsterTwo = Lobster_Two({ subsets: ["latin"], weight: "400" });
-
-export const playfair = Playfair({ subsets: ["latin"], weight: "400" });
 
 export const poppins = Poppins({ subsets: ["latin"], weight: "400" });
