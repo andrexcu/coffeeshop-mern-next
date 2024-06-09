@@ -4,6 +4,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -110,14 +111,21 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  const fetchCurrentItemQuantity = async (id: string) => {
+  // const fetchCurrentItemQuantity = async (id: string) => {
+  //   const currentItemQuantity = await getCartItemQuantity(id);
+  //   setUserProductQuantity((prevQuantities) => ({
+  //     ...prevQuantities,
+  //     [id]: currentItemQuantity,
+  //   }));
+  // };
+  const fetchCurrentItemQuantity = useCallback(async (id: string) => {
     const currentItemQuantity = await getCartItemQuantity(id);
     setUserProductQuantity((prevQuantities) => ({
       ...prevQuantities,
       [id]: currentItemQuantity,
     }));
-  };
-
+  }, []);
+  
   async function increaseCartQuantity(id: string) {
     if (!currentUser) {
       setCartItems((currItems) => {
