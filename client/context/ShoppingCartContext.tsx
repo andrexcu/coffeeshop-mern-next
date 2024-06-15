@@ -9,7 +9,7 @@ import {
   useEffect,
   useState,
 } from "react";
-// import { ShoppingCart } from "../components/ShoppingCart"
+
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { UserType } from "@/lib/types";
 import getCurrentUser from "@/actions/get-current-user";
@@ -40,7 +40,6 @@ type ShoppingCartContext = {
   cartQuantity: number | undefined;
   itemQuantity: number | undefined;
   cartItems: CartItem[];
-  // mergeCart: () => void;
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   fetchCurrentItemQuantity: (id: string) => void;
   currentUser: UserType | null;
@@ -62,12 +61,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [isLoading, setIsLoading] = useState<{ [productId: string]: boolean }>(
     {}
   );
-  // const [userProductQuantity, setUserProductQuantity] = useState<
-  //   number | undefined
-  // >(undefined);
-  // const [itemQuantityFromServer, setItemQuantityFromServer] = useState<
-  //   number | undefined
-  // >(undefined);
 
   const [cartState, setCartState] = useState<{ [productId: string]: boolean }>(
     {}
@@ -96,13 +89,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     fetchItemQuantity();
   }, [cartState]);
 
-  // let cartQuantity;
-  // if (!currentUser) {
   const cartQuantity = cartItems.reduce(
     (quantity, item) => item.quantity + quantity,
     0
   );
-  // }
+
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -111,13 +102,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  // const fetchCurrentItemQuantity = async (id: string) => {
-  //   const currentItemQuantity = await getCartItemQuantity(id);
-  //   setUserProductQuantity((prevQuantities) => ({
-  //     ...prevQuantities,
-  //     [id]: currentItemQuantity,
-  //   }));
-  // };
   const fetchCurrentItemQuantity = useCallback(async (id: string) => {
     const currentItemQuantity = await getCartItemQuantity(id);
     setUserProductQuantity((prevQuantities) => ({
@@ -188,17 +172,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     });
   }
 
-  // async function mergeCart() {
-  //   await mergeLocalCartToUser(cartItems);
-  //   setCartItems([]);
-  // }
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     mergeCart();
-  //   }
-  // }, [currentUser]);
-
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -221,7 +194,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       }}
     >
       {children}
-      {/* <ShoppingCart isOpen={isOpen} /> */}
     </ShoppingCartContext.Provider>
   );
 }

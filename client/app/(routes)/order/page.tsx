@@ -12,7 +12,7 @@ const OrderPage = () => {
         <div className="relative flex flex-col mt-32 w-full h-full justify-center items-start pt-12 max-w-7xl mx-auto px-4 ">
           <Menu />
           <MostOrdered />
-          <Special />
+          <Special /> 
         </div>
       </Hydration>
     </div>

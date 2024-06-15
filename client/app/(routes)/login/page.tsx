@@ -55,7 +55,6 @@ const Page = () => {
         }
       );
 
-      // console.log(response.data);
       const userData = await getCurrentUser();
 
       await mergeLocalCartToUser(cartItems);
@@ -70,24 +69,6 @@ const Page = () => {
     }
   };
 
-  // useEffect(() => {
-  // const mergeCart = async () => {
-  //   if (user) {
-  //     await new Promise((resolve) => setTimeout(resolve, 0));
-  //     await mergeLocalCartToUser(cartItems);
-  //     location.reload();
-  //   }
-  //   };
-
-  //   mergeCart();
-  //   setCartItems([]);
-  // }, [user]);
-
-  // if (!user) {
-  //   console.log("no user");
-  // } else {
-  //   mergeCart();
-  // }
 
   useEffect(() => {
     const checkUser = async () => {
