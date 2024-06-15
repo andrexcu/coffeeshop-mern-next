@@ -10,17 +10,22 @@ require("dotenv").config();
 
 const app = express();
 
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true,
-// };
+
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 const corsOptions = {
-  origin: (origin: any, callback: any) => {
-    // Allow all origins
-    callback(null, true);
-  },
+  origin: "http://localhost:3000",
   credentials: true,
 };
+
+// const corsOptions = {
+//   origin: (origin: any, callback: any) => {
+//     // Allow all origins
+//     callback(null, true);
+//   },
+//   credentials: true,
+// };
 
 app.use(cors(corsOptions));
 app.use(express.json());

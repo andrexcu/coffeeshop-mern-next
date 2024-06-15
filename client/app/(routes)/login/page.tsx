@@ -52,12 +52,15 @@ const Page = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
       );
 
       const userData = await getCurrentUser();
 
-      await mergeLocalCartToUser(cartItems);
+      // await mergeLocalCartToUser(cartItems);
       setCartItems([]);
 
       location.reload();
