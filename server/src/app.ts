@@ -11,10 +11,14 @@ require("dotenv").config();
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
+const frontendDomain = isProduction ? 'https://coffeeshop-mern-next-app.vercel.app' : 'http://localhost:3000';
+
 
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
 };
 
 // const corsOptions = {
@@ -39,6 +43,7 @@ app.use(
       secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      domain: 'localhost',
     },
   })
 );
