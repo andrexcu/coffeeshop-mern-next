@@ -10,9 +10,7 @@ require("dotenv").config();
 
 const app = express();
 
-
-
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -35,7 +33,12 @@ app.use(
     secret: "andrexcu-dev-secret",
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 60000 * 60 },
+
+    cookie: {
+      maxAge: 60000 * 60,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+    },
   })
 );
 
