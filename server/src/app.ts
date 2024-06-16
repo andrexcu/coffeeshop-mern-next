@@ -11,23 +11,25 @@ require("dotenv").config();
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
+const frontendDomain = isProduction ? 'https://coffeeshop-mern-next-app.vercel.app' : 'http://localhost:3000';
 
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true,
-  // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  // allowedHeaders: 'Content-Type, Authorization',
-// };
 
 const corsOptions = {
-  origin: (origin: any, callback: any) => {
-    // Allow all origins
-    callback(null, true);
-  },
+  origin: frontendDomain,
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
 };
+
+// const corsOptions = {
+//   origin: (origin: any, callback: any) => {
+//     // Allow all origins
+//     callback(null, true);
+//   },
+//   credentials: true,
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   allowedHeaders: 'Content-Type, Authorization',
+// };
 
 app.use(cors(corsOptions));
 app.use(express.json());
