@@ -11,14 +11,15 @@ require("dotenv").config();
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
-const frontendDomain = isProduction ? 'https://coffeeshop-mern-next-app.vercel.app' : 'http://localhost:3000';
-
+const frontendDomain = isProduction
+  ? "https://coffeeshop-mern-next-app.vercel.app"
+  : "http://localhost:3000";
 
 const corsOptions = {
-  origin: frontendDomain,
+  origin: "http://localhost:3000",
   credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type, Authorization',
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
 };
 
 // const corsOptions = {
@@ -33,18 +34,20 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.enable('trust proxy')
 
 app.use(
   session({
     secret: "andrexcu-dev-secret",
     saveUninitialized: false,
     resave: false,
+    proxy: true,
+    name: "CoffeeShopCookie",
     cookie: {
-      maxAge: 60000 * 60,
       httpOnly: true,
       secure: isProduction,
-      sameSite: isProduction ? 'none' : 'lax',
-      domain: isProduction ? '.vercel.app' : 'localhost',
+      maxAge: 60000 * 60,
+      sameSite: isProduction ? "none" : "lax",
     },
   })
 );
