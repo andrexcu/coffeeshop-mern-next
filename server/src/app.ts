@@ -16,7 +16,7 @@ const frontendDomain = isProduction
   : "http://localhost:3000";
 
 const corsOptions = {
-  origin: frontendDomain,
+  origin: "https://coffeeshop-mern-next-app.vercel.app",
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type, Authorization",
@@ -45,9 +45,9 @@ app.use(
     name: "CoffeeShopCookie",
     cookie: {
       httpOnly: true,
-      secure: isProduction,
+      secure: true,
       maxAge: 60000 * 60,
-      sameSite: isProduction ? "none" : "lax",
+      sameSite: "none",
     },
   })
 );
