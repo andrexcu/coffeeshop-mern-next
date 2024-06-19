@@ -1,9 +1,35 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { userType } from "../types/userType";
+import { generateAccessToken, generateRefreshToken } from "../jwt/token";
+import bcrypt from "bcrypt";
+
+let refreshTokens = [];
 
 const loginUser = async (req: Request, res: Response) => {
-  res.json(req.user);
+  // res.json(req.user);
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+  if (user) {
+    //Generate an access token
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(400).json("Username or password incorrect!");
+    }
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+    refreshTokens.push(refreshToken);
+    res.json({
+      username: user.username,
+      isAdmin: user.isAdmin,
+      accessToken,
+      refreshToken,
+    });
+  } else {
+    res.status(400).json("Username or password incorrect!");
+  }
 };
 
 const logoutUser = async (req: Request, res: Response) => {

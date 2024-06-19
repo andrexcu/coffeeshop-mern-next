@@ -1,7 +1,6 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import { User } from "../models/User";
-import { userType } from "../types/userType";
 import bcrypt from "bcrypt";
 
 passport.serializeUser((user: any, done) => {
@@ -38,6 +37,7 @@ export default passport.use(
         password,
         findUserByUsername.password
       );
+      
       if (!passwordMatch) {
         throw new Error("Invalid Credentials");
       }

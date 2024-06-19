@@ -8,6 +8,6 @@ import {
 
 export const authRouter = express.Router();
 
-authRouter.post("/login", passport.authenticate("local"), loginUser);
+authRouter.post("/login", loginUser);
 authRouter.post("/logout", logoutUser);
 authRouter.get("/status", checkAuthStatus);
