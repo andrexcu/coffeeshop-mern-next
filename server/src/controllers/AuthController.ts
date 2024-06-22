@@ -1,10 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { User } from "../models/User";
 import { userType } from "../types/userType";
 import { generateAccessToken, generateRefreshToken } from "../jwt/token";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-let refreshTokens = [];
+let refreshTokens: string[] = [];
+
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
 
 const loginUser = async (req: Request, res: Response) => {
   // res.json(req.user);
@@ -33,36 +38,48 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 const logoutUser = async (req: Request, res: Response) => {
-  if (!req.user) return res.sendStatus(401);
+  const refreshToken = req.body.token;
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
-  try {
-    req.logout((err) => {
-      if (err) {
-        console.error("Error during logout:", err);
-        return res.sendStatus(500);
-      }
-
-      req.session.destroy((sessionErr) => {
-        if (sessionErr) {
-          console.error("Error destroying session:", sessionErr);
-          return res.sendStatus(500);
-        }
-
-        res.json(`User successfully logged out! `);
-      });
-    });
-  } catch (err) {
-    console.error("Error during logout:", err);
-    res.sendStatus(500);
-  }
+  
+  res.status(200).json("You logged out successfully.");
 };
 
 export interface UserWithId extends Omit<userType, "_id"> {
   id: string;
 }
-const checkAuthStatus = async (req: Request, res: Response) => {
-  // console.log("user id: ", (req.user as UserWithId)?.id);
-  return res.json(req.user);
+
+const verifyToken = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, "mySecretKey", (err, user) => {
+      if (err) {
+        return res.status(403).json("Token is not valid!");
+      }
+
+      req.user = user;
+      next();
+    });
+  } else {
+    res.status(401).json("You are not authenticated!");
+  }
 };
 
-export { loginUser, logoutUser, checkAuthStatus };
+const checkAuthStatus = (req: AuthenticatedRequest, res: Response) => {
+  const user = req.user;
+  console.log("Authenticated User:", user); // Debug log
+
+  if (user) {
+    res.json({ username: user.username });
+  } else {
+    res.status(401).json("Not authenticated");
+  }
+};
+
+export { loginUser, logoutUser, verifyToken, checkAuthStatus };

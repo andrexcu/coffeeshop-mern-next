@@ -22,37 +22,27 @@ const corsOptions = {
   allowedHeaders: "Content-Type, Authorization",
 };
 
-// const corsOptions = {
-//   origin: (origin: any, callback: any) => {
-//     // Allow all origins
-//     callback(null, true);
-//   },
-//   credentials: true,
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   allowedHeaders: 'Content-Type, Authorization',
-// };
-
 app.use(cors(corsOptions));
 app.use(express.json());
-app.enable('trust proxy')
+// app.enable('trust proxy')
 
-app.use(
-  session({
-    secret: "andrexcu-dev-secret",
-    saveUninitialized: false,
-    resave: false,
-    proxy: true,
-    name: "CoffeeShopCookie",
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      maxAge: 60000 * 60,
-      sameSite: "none",
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: "andrexcu-dev-secret",
+//     saveUninitialized: false,
+//     resave: false,
+//     proxy: true,
+//     name: "CoffeeShopCookie",
+//     cookie: {
+//       httpOnly: true,
+//       secure: true,
+//       maxAge: 60000 * 60,
+//       sameSite: "none",
+//     },
+//   })
+// );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(routes);
 export default app;
