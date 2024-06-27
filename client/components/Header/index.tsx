@@ -10,7 +10,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { UserType } from "@/lib/types";
-import getCurrentUser from "@/actions/get-current-user";
+// import getCurrentUser from "@/actions/get-current-user";
 import axios from "axios";
 import Hydration from "../ui/Hydration";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
@@ -101,14 +101,14 @@ export default function Index() {
     };
   }, [showBackground]);
 
-  useEffect(() => {
-    const getUserData = async () => {
-      const userData = await getCurrentUser();
-      setCurrentUser(userData);
-    };
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const userData = await getCurrentUser();
+  //     setCurrentUser(userData);
+  //   };
 
-    getUserData();
-  }, []);
+  //   getUserData();
+  // }, []);
 
   const logoutUser = async () => {
     try {

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import routes from "./routes/index";
 import "./strategies/local-strategy";
+import cookieParser from 'cookie-parser';
 
 require("dotenv").config();
 
@@ -16,7 +17,7 @@ const frontendDomain = isProduction
   : "http://localhost:3000";
 
 const corsOptions = {
-  origin: "https://coffeeshop-mern-next-app.vercel.app",
+  origin: "http://localhost:3000",
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type, Authorization",
@@ -24,6 +25,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 // app.enable('trust proxy')
 
 // app.use(

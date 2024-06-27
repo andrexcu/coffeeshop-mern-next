@@ -12,7 +12,7 @@ import {
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { UserType } from "@/lib/types";
-import getCurrentUser from "@/actions/get-current-user";
+// import getCurrentUser from "@/actions/get-current-user";
 import increaseQuantity from "@/actions/increase-quantity";
 import { revalidatePath } from "next/cache";
 import decreaseQuantity from "@/actions/decrease-quantity";
@@ -43,6 +43,7 @@ type ShoppingCartContext = {
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   fetchCurrentItemQuantity: (id: string) => void;
   currentUser: UserType | null;
+  setCurrentUser: Dispatch<SetStateAction<UserType | null>>
   cartState: { [itemId: string]: boolean };
   isLoading: { [itemId: string]: boolean };
 };
@@ -71,14 +72,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     []
   );
 
-  useEffect(() => {
-    const getUserData = async () => {
-      const userData = await getCurrentUser();
-      setCurrentUser(userData);
-    };
-
-    getUserData();
-  }, []);
 
   const fetchItemQuantity = async () => {
     const currentCartQuantity = await getCartQuantity();
@@ -184,6 +177,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         openCart,
         closeCart,
         fetchItemQuantity,
+        setCurrentUser,
         cartItems,
         setCartItems,
         cartQuantity,

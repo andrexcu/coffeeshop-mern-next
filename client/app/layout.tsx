@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Sections/Footer";
-import getCurrentUser from "@/actions/get-current-user";
 import { Toaster } from "@/components/ui/sonner";
 import Hydration from "@/components/ui/Hydration";
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";

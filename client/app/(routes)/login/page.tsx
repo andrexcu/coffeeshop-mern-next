@@ -1,6 +1,7 @@
 "use client";
 
 import getCurrentUser from "@/actions/get-current-user";
+// import getCurrentUser from "@/actions/get-current-user";
 import mergeLocalCartToUser from "@/actions/merge-local-cart-to-user";
 import LoginHydration from "@/components/ui/LoginHydration";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -26,7 +27,7 @@ const Page = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
-  const { cartItems, setCartItems } = useShoppingCart();
+  const { cartItems, setCartItems, currentUser, setCurrentUser } = useShoppingCart();
 
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -58,13 +59,12 @@ const Page = () => {
         }
       );
 
-      const userData = await getCurrentUser();
+      
 
       // await mergeLocalCartToUser(cartItems);
       setCartItems([]);
-
-      location.reload();
-      setUser(userData);
+      setCurrentUser(response.data)
+      console.log(response.data)
     } catch (error) {
       toast.error("Please check your credentials.");
     } finally {
@@ -72,37 +72,46 @@ const Page = () => {
     }
   };
 
-
-  useEffect(() => {
+   useEffect(() => {
     const checkUser = async () => {
       try {
         setIsLoading(true);
-        const currentUser = await getCurrentUser();
-        setUser(currentUser);
+        const loggedInUser = await getCurrentUser();
+        setUser(loggedInUser);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching current user:", error);
+        // Optionally handle error state or redirect to login page
       } finally {
         setIsLoading(false);
       }
     };
+
     checkUser();
   }, []);
-
   // useEffect(() => {
   //   if (user) {
   //     mergeCart();
   //   }
   // }, [user]);
+
+
   useEffect(() => {
-    if (user) {
-      router.push("/");
-      setIsLoading(false);
+    // if (currentUser) {
+    //   router.push("/");
+    //   setIsLoading(false);
+    // }
+    if(!currentUser) {
+      console.log("there is no user yet")
+    } else {
+      console.log("there is a user")
     }
-  }, [user, router]);
+  }, [currentUser, router]);
+  
+  
 
   return (
     <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">
-      {!isLoading && !user && (
+      {!currentUser && (
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center space-y-2 text-center">
             {/* <Icons.logo className="h-20 w-20" /> */}
@@ -150,7 +159,6 @@ const Page = () => {
                     })}
                     placeholder="Password"
                     {...register("password")}
-                    disabled={isLoading}
                   />
                   {errors?.password && (
                     <p className="text-sm text-red-500">
