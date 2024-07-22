@@ -49,14 +49,14 @@ const createCart = async (req: Request, res: Response) => {
 };
 
 const getCartQuantity = async (req: Request, res: Response) => {
-  const user = req.user as UserWithId;
+  const {userId} = req.body
 
   try {
-    if (!user) {
+    if (!userId) {
       return res.json("no user found!");
     }
 
-    const cart = await Cart.findOne({ userId: user.id })
+    const cart = await Cart.findOne({ userId: userId })
       .populate("cartItem")
       .exec();
 

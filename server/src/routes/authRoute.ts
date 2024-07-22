@@ -12,7 +12,7 @@ import {
 export const authRouter = express.Router();
 
 authRouter.post("/login", loginUser);
-authRouter.post("/logout", verifyToken,logoutUser);
+authRouter.post("/logout", logoutUser);
 authRouter.post("/refresh", refresh)
 authRouter.get("/status", checkAuthStatus);
 

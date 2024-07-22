@@ -25,6 +25,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import getCurrentUser from "@/actions/get-current-user";
+import { toast } from "sonner";
 
 const components: { title: string; href: string }[] = [
   {
@@ -42,15 +44,30 @@ const components: { title: string; href: string }[] = [
 ];
 
 export default function Index() {
-  const { cartQuantity, itemQuantity } = useShoppingCart();
+  const { cartQuantity, currentUser, setCurrentUser, itemQuantity } = useShoppingCart();
   const [showBackground, setShowBackground] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const pathname = usePathname();
+  // const [authStatus, setAuthStatus] = useState(null);
   // const button = useRef({});
   const button = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  // const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+
+  // const { currentUser } = useShoppingCart();
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const data = await getCurrentUser();
+        setCurrentUser(data);
+
+      } catch (error) {}
+    };
+
+    checkAuthStatus();
+  }, []);
+
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -122,6 +139,8 @@ export default function Index() {
           },
         }
       );
+
+      localStorage.removeItem('accessToken');
       location.reload();
     } catch (error) {
       console.error("Error during logout:", error);

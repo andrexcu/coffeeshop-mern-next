@@ -11,6 +11,6 @@ export const cartRouter = express.Router();
 // authRouter.post("/login", passport.authenticate("local"), loginUser);
 // authRouter.post("/logout", logoutUser);
 cartRouter.get("/", getCart);
-cartRouter.get("/getCartQuantity", getCartQuantity);
+cartRouter.post("/getCartQuantity", getCartQuantity);
 cartRouter.get("/getCartItems", getCartItems);
 cartRouter.post("/", createCart);

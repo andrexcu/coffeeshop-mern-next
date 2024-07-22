@@ -76,20 +76,19 @@ const removeCartItem = async (cartId: any, productId: any) => {
 };
 
 const increaseQuantity = async (req: Request, res: Response) => {
-  const user = req.user as UserWithId;
-  const { productId } = req.body;
+  const { productId, userId } = req.body;
 
   try {
-    if (!user) {
+    if (!userId) {
       return res.json("no user found!");
     }
-    let cart = await Cart.findOne({ userId: user.id });
+    let cart = await Cart.findOne({ userId });
 
     let newCart;
 
     if (!cart) {
       cart = await Cart.create({
-        userId: user.id,
+        userId,
         cartItem: [], // Initialize with an empty array of cart items
       });
     }
@@ -116,14 +115,13 @@ const increaseQuantity = async (req: Request, res: Response) => {
 };
 
 const decreaseQuantity = async (req: Request, res: Response) => {
-  const user = req.user as UserWithId;
-  const { productId } = req.body;
+  const { productId, userId } = req.body;
 
   try {
-    if (!user) {
+    if (!userId) {
       return res.json("no user found!");
     }
-    const cart = await Cart.findOne({ userId: user.id });
+    const cart = await Cart.findOne({ userId });
 
     if (!cart) {
       return res.json("no cart found!");
@@ -153,14 +151,14 @@ const decreaseQuantity = async (req: Request, res: Response) => {
 };
 
 const getItemQuantity = async (req: Request, res: Response) => {
-  const user = req.user as UserWithId;
-  const { productId } = req.body;
+  // const user = req.user as UserWithId;
+  const { productId, userId } = req.body;
 
   try {
-    if (!user) {
+    if (!userId) {
       return res.json("no user found!");
     }
-    const cart = await Cart.findOne({ userId: user.id });
+    const cart = await Cart.findOne({ userId: userId });
     if (!cart) {
       return res.json("no cart found!");
     }
@@ -179,19 +177,18 @@ const getItemQuantity = async (req: Request, res: Response) => {
 };
 
 const mergeLocalCartToUser = async (req: Request, res: Response) => {
-  const user = req.user as UserWithId;
-  const localCartItems = req.body;
+  const { userId, localCartItems } = req.body;
 
   try {
-    if (!user) {
+    if (!userId) {
       return res.status(400).json({ error: "No user found!" });
     }
 
-    let userCart = await Cart.findOne({ userId: user.id });
+    let userCart = await Cart.findOne({ userId });
 
     if (!userCart) {
       userCart = await Cart.create({
-        userId: user.id,
+        userId,
         cartItem: [], // Initialize with an empty array of cart items
       });
     }

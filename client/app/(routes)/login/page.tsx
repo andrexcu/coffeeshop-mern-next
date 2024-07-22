@@ -8,6 +8,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { cn } from "@/lib/utils";
 import {
   AuthCredentialsValidator,
@@ -28,6 +29,7 @@ const Page = () => {
   const router = useRouter();
 
   const { cartItems, setCartItems, currentUser, setCurrentUser } = useShoppingCart();
+  const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
 
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -58,13 +60,11 @@ const Page = () => {
           },
         }
       );
-
       
-
-      // await mergeLocalCartToUser(cartItems);
       setCartItems([]);
-      setCurrentUser(response.data)
-      console.log(response.data)
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
+      location.reload()
     } catch (error) {
       toast.error("Please check your credentials.");
     } finally {
@@ -72,22 +72,34 @@ const Page = () => {
     }
   };
 
-   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        setIsLoading(true);
-        const loggedInUser = await getCurrentUser();
-        setUser(loggedInUser);
-      } catch (error) {
-        console.log("Error fetching current user:", error);
-        // Optionally handle error state or redirect to login page
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  
 
-    checkUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const userData = await getCurrentUser();
+  //     setCurrentUser(userData);
+      
+  //   };
+
+  //   getUserData();
+  // }, []);
+  
+  //  useEffect(() => {
+  //   const checkUser = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const loggedInUser = await getCurrentUser();
+  //       setUser(loggedInUser);
+  //     } catch (error) {
+  //       console.log("Error fetching current user:", error);
+  //       // Optionally handle error state or redirect to login page
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   checkUser();
+  // }, [currentUser]);
   // useEffect(() => {
   //   if (user) {
   //     mergeCart();
@@ -96,15 +108,11 @@ const Page = () => {
 
 
   useEffect(() => {
-    // if (currentUser) {
-    //   router.push("/");
-    //   setIsLoading(false);
-    // }
-    if(!currentUser) {
-      console.log("there is no user yet")
-    } else {
-      console.log("there is a user")
+    if (currentUser) {
+      router.push("/");
+      setIsLoading(false);
     }
+
   }, [currentUser, router]);
   
   

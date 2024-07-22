@@ -41,13 +41,7 @@ const loginUser = async (req: Request, res: Response) => {
   });
 
   // Send accessToken containing username and roles
-  res.json({
-    id: foundUser.id,
-    username: foundUser.username,
-    email: foundUser.email,
-    accessToken,
-    refreshToken,
-  });
+  res.json({accessToken});
 };
 
 const logoutUser = async (req: Request, res: Response) => {
@@ -143,11 +137,6 @@ const checkAuthStatus = (req: AuthenticatedRequest, res: Response) => {
 
       if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
       res.json(foundUser);
-      // res.json({
-      //   id: foundUser.id,
-      //   username: foundUser.username,
-      //   email: foundUser.email,
-      // });
     }
   );
 };

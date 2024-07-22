@@ -18,6 +18,7 @@ export const productsRouter = express.Router();
 productsRouter.get("/", getProducts);
 productsRouter.post("/", isAdminMiddleware, createProductSchema, createProduct);
 productsRouter.get("/:id", productMiddleware, getProduct);
+
 productsRouter.patch(
   "/:id",
   isAdminMiddleware,
@@ -25,6 +26,7 @@ productsRouter.patch(
   updateProductSchema,
   updateProduct
 );
+
 productsRouter.delete(
   "/:id",
   isAdminMiddleware,

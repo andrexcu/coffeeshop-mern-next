@@ -16,8 +16,9 @@ import { UserType } from "@/lib/types";
 import increaseQuantity from "@/actions/increase-quantity";
 import { revalidatePath } from "next/cache";
 import decreaseQuantity from "@/actions/decrease-quantity";
-import getCartItemQuantity from "@/actions/get-item-quantity";
 import getCartQuantity from "@/actions/get-cart-quantity";
+import { userIdType } from "@/types/userType";
+import getCartItemQuantity from "@/actions/get-item-quantity";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -41,7 +42,7 @@ type ShoppingCartContext = {
   itemQuantity: number | undefined;
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
-  fetchCurrentItemQuantity: (id: string) => void;
+  fetchCurrentItemQuantity: ({productId, userId}: userIdType) => void;
   currentUser: UserType | null;
   setCurrentUser: Dispatch<SetStateAction<UserType | null>>
   cartState: { [itemId: string]: boolean };
@@ -74,13 +75,13 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
 
   const fetchItemQuantity = async () => {
-    const currentCartQuantity = await getCartQuantity();
+    const currentCartQuantity = await getCartQuantity(currentUser?._id as string);
     setItemQuantity(currentCartQuantity);
   };
 
   useEffect(() => {
     fetchItemQuantity();
-  }, [cartState]);
+  }, [currentUser, cartState]);
 
   const cartQuantity = cartItems.reduce(
     (quantity, item) => item.quantity + quantity,
@@ -95,16 +96,17 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  const fetchCurrentItemQuantity = useCallback(async (id: string) => {
-    const currentItemQuantity = await getCartItemQuantity(id);
+  const fetchCurrentItemQuantity = useCallback(async ({productId, userId}: userIdType) => {
+    const currentItemQuantity = await getCartItemQuantity({productId, userId});
+   
     setUserProductQuantity((prevQuantities) => ({
       ...prevQuantities,
-      [id]: currentItemQuantity,
+      [productId]: currentItemQuantity,
     }));
   }, []);
   
   async function increaseCartQuantity(id: string) {
-    if (!currentUser) {
+    if (!currentUser || !currentUser._id) {
       setCartItems((currItems) => {
         if (currItems.find((item) => item.id === id) == null) {
           return [...currItems, { id, quantity: 1 }];
@@ -121,7 +123,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     } else {
       try {
         setIsLoading((prevLoading) => ({ ...prevLoading, [id]: true }));
-        await increaseQuantity(id);
+        await increaseQuantity({ productId: id, userId: currentUser._id });
         setCartState((prevState) => ({ ...prevState, [id]: !prevState[id] }));
       } catch (error) {
         console.log(error);
@@ -132,7 +134,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   }
 
   async function decreaseCartQuantity(id: string) {
-    if (!currentUser) {
+    if (!currentUser || !currentUser._id) {
       setCartItems((currItems) => {
         if (currItems.find((item) => item.id === id)?.quantity === 1) {
           return currItems.filter((item) => item.id !== id);
@@ -149,7 +151,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     } else {
       try {
         setIsLoading((prevLoading) => ({ ...prevLoading, [id]: true }));
-        await decreaseQuantity(id);
+        await decreaseQuantity({ productId: id, userId: currentUser._id });
         setCartState((prevState) => ({ ...prevState, [id]: !prevState[id] }));
       } catch (error) {
         console.log(error);
