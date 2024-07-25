@@ -28,8 +28,13 @@ const Page = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
-  const { cartItems, setCartItems, currentUser, setCurrentUser } = useShoppingCart();
-  const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null);
+  const { cartItems, setCartItems, currentUser, setCurrentUser } =
+    useShoppingCart();
+    
+  const [accessToken, setAccessToken] = useLocalStorage<string | null>(
+    "accessToken",
+    null
+  );
 
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -56,15 +61,22 @@ const Page = () => {
         {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
+
+
+
       
-      setCartItems([]);
-      const { accessToken } = response.data;
+      const { accessToken, _id } = response.data;
+      
+      await mergeLocalCartToUser({userId: _id, cartItems})
+      console.log(_id)
+      console.log(cartItems)
       setAccessToken(accessToken);
-      location.reload()
+      setCartItems([]);
+      location.reload();
     } catch (error) {
       toast.error("Please check your credentials.");
     } finally {
@@ -72,18 +84,18 @@ const Page = () => {
     }
   };
 
-  
-
   // useEffect(() => {
-  //   const getUserData = async () => {
-  //     const userData = await getCurrentUser();
-  //     setCurrentUser(userData);
-      
+  //   const mergeCart = async () => {
+  //     await mergeLocalCartToUser({cartItem: cartItems, userId: currentUser?._id as string})
+  //     console.log(cartItems);
   //   };
+
+  //   if (currentUser) mergeCart();
+  // }, [currentUser]);
 
   //   getUserData();
   // }, []);
-  
+
   //  useEffect(() => {
   //   const checkUser = async () => {
   //     try {
@@ -106,16 +118,12 @@ const Page = () => {
   //   }
   // }, [user]);
 
-
   useEffect(() => {
     if (currentUser) {
       router.push("/");
       setIsLoading(false);
     }
-
   }, [currentUser, router]);
-  
-  
 
   return (
     <div className="h-dvh container relative flex pt-20 flex-col items-center justify-center lg:px-0">

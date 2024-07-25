@@ -41,7 +41,7 @@ const loginUser = async (req: Request, res: Response) => {
   });
 
   // Send accessToken containing username and roles
-  res.json({accessToken});
+  res.json({...foundUser.toObject(), accessToken});
 };
 
 const logoutUser = async (req: Request, res: Response) => {

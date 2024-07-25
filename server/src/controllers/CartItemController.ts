@@ -177,11 +177,11 @@ const getItemQuantity = async (req: Request, res: Response) => {
 };
 
 const mergeLocalCartToUser = async (req: Request, res: Response) => {
-  const { userId, localCartItems } = req.body;
+  const { userId, cartItems } = req.body;
 
   try {
     if (!userId) {
-      return res.status(400).json({ error: "No user found!" });
+      return res.status(400).json();
     }
 
     let userCart = await Cart.findOne({ userId });
@@ -194,7 +194,7 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
     }
 
     // Ensure localCartItems is an array
-    if (!Array.isArray(localCartItems)) {
+    if (!Array.isArray(cartItems)) {
       return res.status(400).json({
         error: "Invalid request format. Expected an array of cart items.",
       });
@@ -205,7 +205,7 @@ const mergeLocalCartToUser = async (req: Request, res: Response) => {
     session.startTransaction();
 
     try {
-      for (const localCartItem of localCartItems) {
+      for (const localCartItem of cartItems) {
         if (!localCartItem || !localCartItem.id || !localCartItem.quantity) {
           console.error("Invalid localCartItem:", localCartItem);
           continue; // Skip the current iteration if localCartItem is invalid

@@ -33,13 +33,16 @@ const Page = () => {
 
   useEffect(() => {
     const fetchUserCartItems = async () => {
-      const userCartItems = await getCartItems();
+      // if(!currentUser?._id) return
+      const userCartItems = await getCartItems({userId: currentUser?._id as string});
       setUserCartItems(userCartItems);
+      
     };
 
     fetchUserCartItems();
   }, []);
 
+  // console.log(userCartItems)
   useEffect(() => {
     // Filter products based on userCartItems
     if (userCartItems && userCartItems.length > 0) {
@@ -48,7 +51,10 @@ const Page = () => {
       );
       setUserProducts(fetchedUserProducts);
     }
+
+    
   }, [userCartItems, products]);
+
 
   const getProductsInCart = () => {
     if (!products || !cartItems) {
@@ -81,11 +87,12 @@ const Page = () => {
     calculateTotalItems();
   }, [cartItems]);
 
+  console.log(totalItems)
   return (
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
         <div className="flex flex-col gap-2 w-full  text-white">
-          {totalItems > 0 ? (
+         
             <table className="w-full my-8 table-fixed">
               <thead className="bg-[#cda45e]">
                 <tr className="">
@@ -127,11 +134,8 @@ const Page = () => {
                 </tr>
               </tfoot>
             </table>
-          ) : (
-            <div className="flex justify-center items-center text-xl">
-              You don&apos;t have any coffee ordered yet.
-            </div>
-          )}
+          
+        
         </div>
       </div>
     </div>

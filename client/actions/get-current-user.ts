@@ -5,7 +5,7 @@ const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/status`;
 const getCurrentUser = async () => {
   const accessToken = localStorage.getItem('accessToken');
   
-  if (!accessToken) {
+  if (!accessToken) { 
     throw new Error("No access token found");
   }
 

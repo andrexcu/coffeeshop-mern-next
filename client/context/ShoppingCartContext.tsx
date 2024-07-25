@@ -19,6 +19,7 @@ import decreaseQuantity from "@/actions/decrease-quantity";
 import getCartQuantity from "@/actions/get-cart-quantity";
 import { userIdType } from "@/types/userType";
 import getCartItemQuantity from "@/actions/get-item-quantity";
+import { error } from "console";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -42,7 +43,7 @@ type ShoppingCartContext = {
   itemQuantity: number | undefined;
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
-  fetchCurrentItemQuantity: ({productId, userId}: userIdType) => void;
+  fetchCurrentItemQuantity: (productId: string) => void;
   currentUser: UserType | null;
   setCurrentUser: Dispatch<SetStateAction<UserType | null>>
   cartState: { [itemId: string]: boolean };
@@ -96,14 +97,19 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  const fetchCurrentItemQuantity = useCallback(async ({productId, userId}: userIdType) => {
-    const currentItemQuantity = await getCartItemQuantity({productId, userId});
+  const fetchCurrentItemQuantity = useCallback(async (productId: string) => {
+
+    if(!currentUser || !currentUser._id) {
+      return
+    }
+
+    const currentItemQuantity = await getCartItemQuantity({productId, userId: currentUser?._id});
    
     setUserProductQuantity((prevQuantities) => ({
       ...prevQuantities,
       [productId]: currentItemQuantity,
     }));
-  }, []);
+  }, [currentUser]);
   
   async function increaseCartQuantity(id: string) {
     if (!currentUser || !currentUser._id) {

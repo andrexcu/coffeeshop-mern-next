@@ -12,5 +12,5 @@ export const cartRouter = express.Router();
 // authRouter.post("/logout", logoutUser);
 cartRouter.get("/", getCart);
 cartRouter.post("/getCartQuantity", getCartQuantity);
-cartRouter.get("/getCartItems", getCartItems);
+cartRouter.post("/getCartItems", getCartItems);
 cartRouter.post("/", createCart);

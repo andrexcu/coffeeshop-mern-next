@@ -83,17 +83,17 @@ const getCartQuantity = async (req: Request, res: Response) => {
 
 const getCartItems = async (req: Request, res: Response) => {
   try {
-    const user = req.user as UserWithId;
+    const {userId} = req.body
 
-    if (!user) {
-      return res.json({ msg: "no logged in user" });
+    if (!userId) {
+      return res.json();
     }
 
     // console.log(user.id);
 
     // const cart = await Cart.find().lean();
 
-    const cart = await Cart.findOne({ userId: user.id });
+    const cart = await Cart.findOne({ userId });
 
     if (!cart) {
       return res.status(404).json({ error: "No cart found" });
