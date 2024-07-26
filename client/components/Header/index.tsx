@@ -66,7 +66,7 @@ export default function Index() {
     };
 
     checkAuthStatus();
-  }, []);
+  }, [setCurrentUser]);
 
 
   const scrollToTop = () => {

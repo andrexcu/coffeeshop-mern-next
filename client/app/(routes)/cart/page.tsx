@@ -48,7 +48,7 @@ const Page = () => {
     };
 
     fetchUserCartItems();
-  }, [currentUser, increaseCartQuantity, decreaseCartQuantity]);
+  }, [currentUser, userCartItems, increaseCartQuantity, decreaseCartQuantity]);
 
   // useEffect(() => {
   //   if(!isFetching)
@@ -107,7 +107,7 @@ const Page = () => {
       }, 0);
       setUserTotalPrice(totalPrice);
     }
-  }, [userProducts]);
+  }, [userCartItems, userProducts]);
 
   // local cart
   useEffect(() => {

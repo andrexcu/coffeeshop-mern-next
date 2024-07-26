@@ -24,8 +24,7 @@ export default async function RootLayout({
   // const currentUser = await getCurrentUser();
   // console.log(currentUser);
 
-  const itemQuantity = await getCartQuantity();
-  console.log(itemQuantity);
+
 
   return (
     <html lang="en">
