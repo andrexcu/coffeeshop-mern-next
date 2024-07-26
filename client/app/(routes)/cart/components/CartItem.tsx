@@ -89,7 +89,9 @@ const CartItem = ({ product }: CartItemProps) => {
           ? currentQuantity
             ? currentQuantity * product.price
             : 0
-          : userProductQuantity[product._id] * product.price}
+          : userProductQuantity[product._id]
+          ? userProductQuantity[product._id] * product.price
+          : 0}
       </td>
       <td className="">
         <div className="flex gap-x-4">

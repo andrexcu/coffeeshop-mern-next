@@ -5,7 +5,7 @@ import CartItem from "./CartItem";
 type OrderTableType = {
   productsInCart: ProductType[] | undefined;
   totalItems: number
-  totalPrice: number | undefined
+  totalPrice: number
 };
 
 const OrderTable = ({ productsInCart, totalItems, totalPrice }: OrderTableType) => {

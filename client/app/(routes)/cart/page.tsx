@@ -13,8 +13,9 @@ type CartItemType = {
 };
 
 const Page = () => {
-  const { cartItems, currentUser, increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
-  const [isFetching, setIsFetching] = useState(false);
+  const { cartItems, currentUser, increaseCartQuantity, decreaseCartQuantity } =
+    useShoppingCart();
+  const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
     null
@@ -23,8 +24,8 @@ const Page = () => {
   const [userProducts, setUserProducts] = useState<ProductType[] | undefined>(
     undefined
   );
-  const [userTotalItems, setUserTotalItems] = useState<number>(0);
-  const [userTotalPrice, setUserTotalPrice] = useState<number>(0);
+  const [userTotalItems, setUserTotalItems] = useState(0);
+  const [userTotalPrice, setUserTotalPrice] = useState(0);
 
   const [totalItems, setTotalItems] = useState(0);
 
@@ -39,12 +40,10 @@ const Page = () => {
   useEffect(() => {
     const fetchUserCartItems = async () => {
       if (!currentUser?._id) return;
-      setIsFetching(true);
       const userCartItems = await getCartItems({
         userId: currentUser?._id,
       });
       setUserCartItems(userCartItems);
-      setIsFetching(false);
     };
 
     fetchUserCartItems();
@@ -57,12 +56,14 @@ const Page = () => {
 
   useEffect(() => {
     // Filter products based on userCartItems
+    setIsLoading(true)
     if (userCartItems && userCartItems.length > 0) {
       const fetchedUserProducts = products?.filter((product) =>
         userCartItems?.some((cartItem) => cartItem.productId === product._id)
       );
       setUserProducts(fetchedUserProducts);
     }
+    setIsLoading(false)
   }, [userCartItems, products]);
 
   const getProductsInCart = () => {
@@ -81,6 +82,7 @@ const Page = () => {
 
   // user Cart
   useEffect(() => {
+    setIsLoading(true)
     const calculateTotalItems = () => {
       if (!userCartItems) return;
       const userTotal = userCartItems?.reduce(
@@ -92,10 +94,12 @@ const Page = () => {
     };
 
     calculateTotalItems();
+    setIsLoading(false)
   }, [userCartItems]);
   // user cart price
   useEffect(() => {
-    if (userProducts) {
+    setIsLoading(true)
+    if (userProducts && userCartItems) {
       const totalPrice = userProducts.reduce((total, product) => {
         const cartItem = userCartItems?.find(
           (item) => item.productId === product._id
@@ -106,17 +110,23 @@ const Page = () => {
         return total;
       }, 0);
       setUserTotalPrice(totalPrice);
+      setIsLoading(false);
+    } else {
+      setUserTotalPrice(0);
+      setIsLoading(false);
     }
   }, [userCartItems, userProducts]);
 
   // local cart
   useEffect(() => {
+    setIsLoading(true)
     const calculateTotalItems = () => {
       const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
       setTotalItems(total);
     };
 
     calculateTotalItems();
+    setIsLoading(false)
   }, [cartItems]);
 
   // local cart price
@@ -134,25 +144,31 @@ const Page = () => {
   //     console.log(userProducts);
 
   // }, [userProducts]);
+
+  // console.log(userTotalPrice)
   return (
     <div className="min-h-dvh flex max-w-7xl mx-auto">
-      <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
-        <div className="flex flex-col gap-2 w-full  text-white">
-          {!currentUser ? (
-            <OrderTable
-              productsInCart={productsInCart}
-              totalItems={totalItems}
-              totalPrice={totalPrice}
-            />
-          ) : (
-            <OrderTable
-              productsInCart={userProducts}
-              totalItems={userTotalItems}
-              totalPrice={userTotalPrice}
-            />
-          )}
+      {!isLoading ? (
+        <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
+          <div className="flex flex-col gap-2 w-full  text-white">
+            {!currentUser ? (
+              <OrderTable
+                productsInCart={productsInCart}
+                totalItems={totalItems}
+                totalPrice={totalPrice}
+              />
+            ) : (
+              <OrderTable
+                productsInCart={userProducts}
+                totalItems={userTotalItems}
+                totalPrice={!isLoading ? userTotalPrice : 0}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
