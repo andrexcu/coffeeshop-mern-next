@@ -13,7 +13,7 @@ type CartItemType = {
 };
 
 const Page = () => {
-  const { cartItems, currentUser } = useShoppingCart();
+  const { cartItems, currentUser, increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
   const [isFetching, setIsFetching] = useState(false);
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
@@ -48,12 +48,12 @@ const Page = () => {
     };
 
     fetchUserCartItems();
-  }, [currentUser]);
+  }, [currentUser, increaseCartQuantity, decreaseCartQuantity]);
 
-  useEffect(() => {
-    if(!isFetching)
-    console.log(userCartItems);
-  }, [userCartItems]);
+  // useEffect(() => {
+  //   if(!isFetching)
+  //   console.log(userCartItems);
+  // }, [userCartItems]);
 
   useEffect(() => {
     // Filter products based on userCartItems

@@ -5,16 +5,16 @@ import mongoose from "mongoose";
 import passport from "passport";
 import routes from "./routes/index";
 import "./strategies/local-strategy";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 
 require("dotenv").config();
 
 const app = express();
 
-const isProduction = process.env.NODE_ENV === "production";
-const frontendDomain = isProduction
-  ? "https://coffeeshop-mern-next-app.vercel.app"
-  : "http://localhost:3000";
+// const isProduction = process.env.NODE_ENV === "production";
+// const frontendDomain = isProduction
+//   ? "https://coffeeshop-mern-next-app.vercel.app"
+//   : "http://localhost:3000";
 
 const corsOptions = {
   origin: "http://localhost:3000",
