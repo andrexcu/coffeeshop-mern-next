@@ -5,6 +5,7 @@ import { useShoppingCart } from "@/context/ShoppingCartContext";
 import getAllProducts from "@/actions/get-all-products";
 import { ProductType } from "@/lib/types";
 import getCartItems from "@/actions/get-cart-items";
+import OrderTable from "./components/OrderTable";
 
 type CartItemType = {
   productId: string;
@@ -13,13 +14,17 @@ type CartItemType = {
 
 const Page = () => {
   const { cartItems, currentUser } = useShoppingCart();
+  const [isFetching, setIsFetching] = useState(false);
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const [userCartItems, setUserCartItems] = useState<CartItemType[] | null>(
     null
   );
+
   const [userProducts, setUserProducts] = useState<ProductType[] | undefined>(
     undefined
   );
+  const [userTotalItems, setUserTotalItems] = useState<number>(0);
+  const [userTotalPrice, setUserTotalPrice] = useState<number>(0);
 
   const [totalItems, setTotalItems] = useState(0);
 
@@ -33,16 +38,23 @@ const Page = () => {
 
   useEffect(() => {
     const fetchUserCartItems = async () => {
-      // if(!currentUser?._id) return
-      const userCartItems = await getCartItems({userId: currentUser?._id as string});
+      if (!currentUser?._id) return;
+      setIsFetching(true);
+      const userCartItems = await getCartItems({
+        userId: currentUser?._id,
+      });
       setUserCartItems(userCartItems);
-      
+      setIsFetching(false);
     };
 
     fetchUserCartItems();
-  }, []);
+  }, [currentUser]);
 
-  // console.log(userCartItems)
+  useEffect(() => {
+    if(!isFetching)
+    console.log(userCartItems);
+  }, [userCartItems]);
+
   useEffect(() => {
     // Filter products based on userCartItems
     if (userCartItems && userCartItems.length > 0) {
@@ -51,10 +63,7 @@ const Page = () => {
       );
       setUserProducts(fetchedUserProducts);
     }
-
-    
   }, [userCartItems, products]);
-
 
   const getProductsInCart = () => {
     if (!products || !cartItems) {
@@ -70,14 +79,37 @@ const Page = () => {
 
   const productsInCart = getProductsInCart();
 
-  const totalPrice = productsInCart.reduce((total, product) => {
-    const cartItem = cartItems.find((item) => item.id === product._id);
-    if (cartItem) {
-      return total + cartItem.quantity * product.price;
-    }
-    return total;
-  }, 0);
+  // user Cart
+  useEffect(() => {
+    const calculateTotalItems = () => {
+      if (!userCartItems) return;
+      const userTotal = userCartItems?.reduce(
+        (acc, item) => acc + item.quantity,
+        0
+      );
+      if (!userTotal) return;
+      setUserTotalItems(userTotal);
+    };
 
+    calculateTotalItems();
+  }, [userCartItems]);
+  // user cart price
+  useEffect(() => {
+    if (userProducts) {
+      const totalPrice = userProducts.reduce((total, product) => {
+        const cartItem = userCartItems?.find(
+          (item) => item.productId === product._id
+        );
+        if (cartItem) {
+          return total + cartItem.quantity * product.price;
+        }
+        return total;
+      }, 0);
+      setUserTotalPrice(totalPrice);
+    }
+  }, [userProducts]);
+
+  // local cart
   useEffect(() => {
     const calculateTotalItems = () => {
       const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -87,55 +119,38 @@ const Page = () => {
     calculateTotalItems();
   }, [cartItems]);
 
-  console.log(totalItems)
+  // local cart price
+  const totalPrice = productsInCart.reduce((total, product) => {
+    const cartItem = cartItems.find((item) => item.id === product._id);
+    if (cartItem) {
+      return total + cartItem.quantity * product.price;
+    }
+    return total;
+  }, 0);
+
+  // console.log(userProducts, userTotalItems, userTotalPrice)
+  // useEffect(() => {
+
+  //     console.log(userProducts);
+
+  // }, [userProducts]);
   return (
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
         <div className="flex flex-col gap-2 w-full  text-white">
-         
-            <table className="w-full my-8 table-fixed">
-              <thead className="bg-[#cda45e]">
-                <tr className="">
-                  <th className="text-start p-4 w-1/2">Product</th>
-                  <th className="text-start w-1/6">Quantity</th>
-                  <th className="text-start w-1/6">Price</th>
-                  <th className="text-start w-1/4"></th>
-                </tr>
-              </thead>
-              <tbody className="">
-                {!currentUser ? (
-                  <>
-                    {productsInCart.map((product) => (
-                      <CartItem key={product._id} product={product} />
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {userProducts?.map((product) => (
-                      <CartItem key={product._id} product={product} />
-                    ))}
-                  </>
-                )}
-              </tbody>
-              <tfoot className="">
-                <tr>
-                  <td
-                    className="text-end p-4  col-span-4 bg-zinc-950"
-                    colSpan={3}
-                  ></td>
-                  <td className="bg-[#cda45e] p-2">
-                    <div className="flex items-center justify-between">
-                      <p>Items: </p> <p>{totalItems}</p>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p>Order Total:</p> <p>${totalPrice}</p>
-                    </div>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          
-        
+          {!currentUser ? (
+            <OrderTable
+              productsInCart={productsInCart}
+              totalItems={totalItems}
+              totalPrice={totalPrice}
+            />
+          ) : (
+            <OrderTable
+              productsInCart={userProducts}
+              totalItems={userTotalItems}
+              totalPrice={userTotalPrice}
+            />
+          )}
         </div>
       </div>
     </div>
