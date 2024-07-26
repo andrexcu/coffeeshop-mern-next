@@ -80,12 +80,13 @@ const CartItem = ({ product }: CartItemProps) => {
       </td>
       <td className="">
         <div className="text-slate-300">
-          {!currentUser ? `${currentQuantity}x` : `${userProductQuantity[product._id]}x`}
+          {!currentUser
+            ? currentQuantity && `${currentQuantity}x`
+            : userProductQuantity[product._id] && `${userProductQuantity[product._id]}x`}
         </div>
       </td>
       {/* `$${product.quantity * product.price}` */}
       <td className="">
-        $
         {!currentUser
           ? currentQuantity
             ? `$${currentQuantity * product.price}`
