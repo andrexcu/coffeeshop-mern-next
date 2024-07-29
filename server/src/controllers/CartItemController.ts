@@ -80,7 +80,7 @@ const increaseQuantity = async (req: Request, res: Response) => {
 
   try {
     if (!userId) {
-      return res.json("no user found!");
+      return res.json();
     }
     let cart = await Cart.findOne({ userId });
 
@@ -119,7 +119,7 @@ const decreaseQuantity = async (req: Request, res: Response) => {
 
   try {
     if (!userId) {
-      return res.json("no user found!");
+      return res.json();
     }
     const cart = await Cart.findOne({ userId });
 

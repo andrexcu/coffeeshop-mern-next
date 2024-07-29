@@ -7,6 +7,15 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../order/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 interface CartItemProps {
   product: ProductType;
@@ -59,8 +68,8 @@ const CartItem = ({ product }: CartItemProps) => {
   )?.quantity;
 
   return (
-    <tr key={product._id} className="bg-[#1a1814]">
-      <td className="">
+    <TableRow key={product._id} className="bg-[#1a1814] ">
+      <TableCell className="">
         <div className="flex items-center gap-4 p-2 ">
           <div className="">
             <Image
@@ -77,16 +86,16 @@ const CartItem = ({ product }: CartItemProps) => {
             <div>{product.name}</div>
           </div>
         </div>
-      </td>
-      <td className="">
+      </TableCell>
+      <TableCell className="">
         <div className="text-slate-300">
           {!currentUser
             ? currentQuantity && `${currentQuantity}x`
             : userProductQuantity[product._id] && `${userProductQuantity[product._id]}x`}
         </div>
-      </td>
+      </TableCell>
       {/* `$${product.quantity * product.price}` */}
-      <td className="">
+      <TableCell className="">
         {!currentUser
           ? currentQuantity
             ? `$${currentQuantity * product.price}`
@@ -94,16 +103,16 @@ const CartItem = ({ product }: CartItemProps) => {
           : userProductQuantity[product._id]
           ? `$${userProductQuantity[product._id] * product.price}`
           : ""}
-      </td>
-      <td className="">
-        <div className="flex gap-x-4">
+      </TableCell>
+      <TableCell className="">
+        <div className="flex gap-x-4 justify-end">
           {!currentUser ? (
             quantity < 1 ? (
               <Button variant="orange" className="" onClick={addCartItem}>
                 Add To Cart
               </Button>
             ) : (
-              <div className="h-10 w-2/5 flex justify-between items-center ">
+              <div className="h-10 w-3/5 flex justify-between items-center">
                 <Plus
                   className={`h-full w-full ${
                     addPressed ? "bg-[#3D2B1F]" : "bg-[#cda45e]"
@@ -143,7 +152,7 @@ const CartItem = ({ product }: CartItemProps) => {
             ) : isLoading[product._id] ? (
               <Loader />
             ) : (
-              <div className="gap-x-4 h-10  flex justify-between items-center ">
+              <div className="gap-x-4 h-10  flex justify-between items-center  ">
                 <Plus
                   className="rounded-lg h-full w-full bg-[#cda45e] transition-colors duration-300 ease-in hover:bg-[#3D2B1F]"
                   onClick={addCartItem}
@@ -158,8 +167,8 @@ const CartItem = ({ product }: CartItemProps) => {
             ""
           )}
         </div>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 

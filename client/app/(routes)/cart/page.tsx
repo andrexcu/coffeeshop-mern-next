@@ -6,6 +6,7 @@ import getAllProducts from "@/actions/get-all-products";
 import { ProductType } from "@/lib/types";
 import getCartItems from "@/actions/get-cart-items";
 import OrderTable from "./components/OrderTable";
+import { Button } from "@/components/ui/button";
 
 type CartItemType = {
   productId: string;
@@ -47,23 +48,21 @@ const Page = () => {
     };
 
     fetchUserCartItems();
-  }, [currentUser, userCartItems, increaseCartQuantity, decreaseCartQuantity]);
-
-  // useEffect(() => {
-  //   if(!isFetching)
-  //   console.log(userCartItems);
-  // }, [userCartItems]);
+  }, [currentUser, increaseCartQuantity, decreaseCartQuantity]);
+  // currentUser, userCartItems, increaseCartQuantity, decreaseCartQuantity
 
   useEffect(() => {
     // Filter products based on userCartItems
-    setIsLoading(true)
+    setIsLoading(true);
     if (userCartItems && userCartItems.length > 0) {
       const fetchedUserProducts = products?.filter((product) =>
         userCartItems?.some((cartItem) => cartItem.productId === product._id)
       );
       setUserProducts(fetchedUserProducts);
+    } else {
+      setUserProducts(undefined);
     }
-    setIsLoading(false)
+    setIsLoading(false);
   }, [userCartItems, products]);
 
   const getProductsInCart = () => {
@@ -82,7 +81,7 @@ const Page = () => {
 
   // user Cart
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const calculateTotalItems = () => {
       if (!userCartItems) return;
       const userTotal = userCartItems?.reduce(
@@ -94,11 +93,11 @@ const Page = () => {
     };
 
     calculateTotalItems();
-    setIsLoading(false)
+    setIsLoading(false);
   }, [userCartItems]);
   // user cart price
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (userProducts && userCartItems) {
       const totalPrice = userProducts.reduce((total, product) => {
         const cartItem = userCartItems?.find(
@@ -112,21 +111,20 @@ const Page = () => {
       setUserTotalPrice(totalPrice);
       setIsLoading(false);
     } else {
-      setUserTotalPrice(0);
       setIsLoading(false);
     }
-  }, [userCartItems, userProducts]);
+  }, [userProducts]);
 
   // local cart
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const calculateTotalItems = () => {
       const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
       setTotalItems(total);
     };
 
     calculateTotalItems();
-    setIsLoading(false)
+    setIsLoading(false);
   }, [cartItems]);
 
   // local cart price
@@ -138,32 +136,39 @@ const Page = () => {
     return total;
   }, 0);
 
-  // console.log(userProducts, userTotalItems, userTotalPrice)
-  // useEffect(() => {
-
-  //     console.log(userProducts);
-
-  // }, [userProducts]);
-
-  // console.log(userTotalPrice)
   return (
     <div className="min-h-dvh flex max-w-7xl mx-auto">
       {!isLoading ? (
         <div className="flex flex-col mt-32 w-full max-w-7xl mx-auto px-4 py-4 ">
           <div className="flex flex-col gap-2 w-full  text-white">
             {!currentUser ? (
-              <OrderTable
-                productsInCart={productsInCart}
-                totalItems={totalItems}
-                totalPrice={totalPrice}
-              />
-            ) : (
+              productsInCart.length !== 0 ? (
+                <OrderTable
+                  productsInCart={productsInCart}
+                  totalItems={totalItems}
+                  totalPrice={totalPrice}
+                />
+              ) : (
+                <div className="text-xl text-center">
+                  You have no coffee ordered yet.
+                </div>
+              )
+            ) : userProducts !== undefined ? (
               <OrderTable
                 productsInCart={userProducts}
                 totalItems={userTotalItems}
-                totalPrice={!isLoading ? userTotalPrice : 0}
+                totalPrice={userTotalPrice}
               />
+            ) : (
+              <div className="text-xl text-center">
+                You have no coffee ordered yet.
+              </div>
             )}
+            {productsInCart.length !== 0 || userProducts !== undefined ? <div className="w-full flex justify-center items-center">
+              <Button variant="default" className="w-1/3">
+                Check Out
+              </Button>
+            </div> : ""}
           </div>
         </div>
       ) : (

@@ -53,7 +53,7 @@ const getCartQuantity = async (req: Request, res: Response) => {
 
   try {
     if (!userId) {
-      return res.json("no user found!");
+      return res.json();
     }
 
     const cart = await Cart.findOne({ userId: userId })
