@@ -25,8 +25,8 @@ const OrderTable = ({
   totalPrice,
 }: OrderTableType) => {
   return (
-    <div className="overflow-x-auto w-full">
-      <Table className="min-w-full my-8 table-fixed">
+    <div className="overflow-x-auto">
+      <Table className="min-w-[700px] w-full">
         <thead className="bg-[#cda45e]">
           <tr className="">
             <th className="text-start p-4 w-1/2 flex-1">Product</th>

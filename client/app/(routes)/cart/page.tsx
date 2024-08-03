@@ -165,7 +165,7 @@ const Page = () => {
               </div>
             )}
             {productsInCart.length !== 0 || userProducts !== undefined ? <div className="w-full flex justify-center items-center">
-              <Button variant="default" className="w-1/3">
+              <Button variant="default" className="w-1/3 mt-8">
                 Check Out
               </Button>
             </div> : ""}
