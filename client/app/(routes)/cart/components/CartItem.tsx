@@ -98,10 +98,10 @@ const CartItem = ({ product }: CartItemProps) => {
       <TableCell className="">
         {!currentUser
           ? currentQuantity
-            ? `$${currentQuantity * product.price}`
+            ? `P${currentQuantity * product.price}`
             : ""
           : userProductQuantity[product._id]
-          ? `$${userProductQuantity[product._id] * product.price}`
+          ? `P${userProductQuantity[product._id] * product.price}`
           : ""}
       </TableCell>
       <TableCell className="">
