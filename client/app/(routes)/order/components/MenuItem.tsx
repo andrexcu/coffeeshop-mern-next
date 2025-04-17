@@ -70,7 +70,7 @@ const MenuItem = ({ product }: MenuItemProps) => {
         />
         <div className="menu-content">
           <a className="z-0">{product.name}</a>
-          <span>${product.price}</span>
+          <span>P{product.price}</span>
         </div>
         <div className="menu-description">{product.description}</div>
 
