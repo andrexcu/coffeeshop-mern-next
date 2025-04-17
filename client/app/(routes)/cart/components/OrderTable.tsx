@@ -45,7 +45,7 @@ const OrderTable = ({
         <TableFooter className="">
           <TableRow>
              <TableCell colSpan={3} className="bg-[#cda45e]">Total</TableCell>
-             <TableCell className="text-right bg-[#cda45e]">${totalPrice}</TableCell>
+             <TableCell className="text-right bg-[#cda45e]">P{totalPrice}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
